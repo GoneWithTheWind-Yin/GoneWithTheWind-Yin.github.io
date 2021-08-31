@@ -1,0 +1,381 @@
+body {
+    width: 1080px;
+    margin: 0;
+    padding: 0;
+    overflow:auto;overflow-x: hidden
+}
+
+ul {
+    list-style-type: none;
+    margin: 40px 90px;
+    padding: 0;
+    overflow: hidden;
+}
+
+li a {
+    text-align: center;
+    padding: 10px 10px;
+    text-decoration: none;
+}
+
+li {
+    float: left;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+.rightPart{
+    float: right;
+    font-size: 14px
+}
+
+.rightPart a{
+    color: #cacaca;
+}
+
+.rightPart a:hover {
+    color: black;
+}
+
+.firstPart {
+    width: 1080px;
+    height: 609px;
+}
+
+.firstBackground {
+    background-image: url("images/lawyer.jpg");
+    background-repeat:no-repeat;
+    background-attachment: scroll;
+    background-size:100% 100%;
+    width: 1080px;
+    height: 609px;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    filter: brightness(90%);
+}
+
+.firstPartWindow {
+    background-color: #0e3b5d;
+    width: 330px;
+    height: 370px;
+    left: 95px;
+    top: 120px;
+    position: relative;
+    filter: brightness(100%);
+}
+
+.firstLine {
+    color: white;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size: 14px;
+    padding-top: 45px;
+    padding-left: 40px;
+}
+
+.secondLine {
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 30px;
+    padding-top: 4px;
+    padding-left: 40px;
+    line-height: 95%;
+}
+
+.thirdLine {
+    color: yellow;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    padding-top: 15px;
+    padding-left: 40px;
+}
+
+input {
+    margin-top: 20px;
+    margin-left: 40px;
+    width: 235px;
+    height: 45px;
+    border: none;
+    font-size: 24px;
+    background-color: white;
+    filter: brightness(100%);
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+button {
+    margin-top: 25px;
+    margin-left: 40px;
+    background-color: #f9df1a;
+    color: black;
+    width: 135px;
+    height: 40px;
+    border: none;
+    filter: brightness(105%);
+    font-family:Arial,Helvetica,sans-serif;
+    font-size: 12px;
+
+}
+
+.secondPart {
+    width: 1080px;
+    height: 350px;
+    margin: 0;
+    padding: 0;
+}
+
+.secondPart div {
+    display: inline-block;
+    width: 270px;
+    height: 110px;
+    padding-top: 100px;
+    font-size: 0;
+}
+
+.secondPart h4 {
+    font-family:Arial,Helvetica,sans-serif;
+    font-weight: lighter;
+    font-size: 16px;
+}
+
+.secondPart p {
+    font-family:Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    color: gray;
+}
+
+.firstFeature {
+    font-size: 0;
+    margin-left: 85px;
+}
+
+.secondFeature {
+    font-size: 0;
+    margin-left: 50px;
+}
+
+.thirdFeature {
+    font-size: 0;
+    margin-left: 50px;
+}
+
+.thirdPart {
+    width: 1080px;
+    height: 310px;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    font-size: 0;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+.quote {
+    top: 40%;
+    left: 20.3%;
+    font-size: 18px;
+    font-weight: lighter;
+    position: relative;
+    color: black;
+}
+
+.author{
+    top: 38%;
+    left: 41.5%;
+    font-size: 12px;
+    position: relative;
+    color: #737373;
+}
+
+.author span {
+    color: black;
+}
+
+.forthPart {
+    width: 1080px;
+    height: 720px;
+    margin: 0;
+    padding: 0;
+}
+
+.secondBackground {
+    width: 1080px;
+    height: 720px;
+    background-size: cover;
+    background-image: url(images/glasses.png);
+    filter: grayscale(100%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    opacity: 0.2;
+    position: absolute;
+}
+
+.planBackground {
+    background-image: url("images/grid.png");
+    opacity: 0.15;
+    width: 280px;
+    height: 450px;
+    background-size: cover;
+    position: absolute;
+    display: inline-block;
+}
+
+.description {
+    margin-top: 0;
+    margin-left: 450px;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    color: gray;
+}
+
+.price {
+    padding-left: 510px;
+    margin-top: 0;
+    padding-top: 50px;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+.basic {
+    width: 280px;
+    height: 450px;
+    margin-left: 80px;
+    margin-top: 80px;
+    background-color: white;
+    position: relative;
+    float: left;
+    display: inline-block;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+.standard, .corporate {
+    width: 280px;
+    height: 450px;
+    margin-left: 35px;
+    margin-top: 80px;
+    background-color: white;
+    position: relative;
+    float: left;
+    display: inline-block;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+.planName, .basic p, .standard p, .corporate p, .planPrice, .buy {
+    text-align: center;
+    position: relative;
+}
+
+.planName {
+    margin-top: 60px;
+}
+
+.basic p, .standard p, .corporate p {
+    line-height: 200%;
+    font-size: 14px;
+    color: gray;
+}
+
+.planPrice {
+    margin-top: 35px;
+    font-size: 24px;
+}
+
+.buy {
+    background-color: #1b3b5b;
+    color: white;
+    position: relative;
+    border: none;
+    font-size:14px;
+    margin-left: 75px;
+    height: 50px;
+}
+
+
+.fifthPart {
+    width: 1080px;
+    height: 410px;
+    display: inline-block;
+}
+
+.thirdBackground {
+    width: 1080px;
+    height: 410px;
+    background-image: url("images/notebook.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-attachment: scroll;
+    background-position: 5% 50%;
+    filter: grayscale(10%);
+    position: absolute;
+}
+
+.backgroundColor {
+    width: 1080px;
+    height: 410px;
+    background-color: #033255;
+    opacity: 0.85;
+    position: absolute;
+}
+
+.advertise {
+    text-align: center;
+    position: relative;
+    margin-top: 140px;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+.firstAdv, .secondAdv {
+    color: white;
+    line-height: 40%;
+}
+
+.firstAdv {
+    font-size: 22px
+}
+
+.secondAdv {
+    font-size: 12px;
+}
+
+.try {
+    font-size: 12px;
+    height: 40px;
+    width: 150px;
+    background-color: #f1da36;
+    margin-left: 5px;
+}
+
+.foot {
+    width: 1080px;
+    height: 250px;
+    background-color: #1e252f;
+    position: absolute;
+}
+
+.webName, .webAddress, .icons{
+    text-align: center;
+    position: relative;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+.webName {
+    margin-top: 80px;
+    color: white;
+}
+
+.webAddress {
+    color: gray;
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+.icons {
+    margin-top: 30px;
+}
+
+.icons a {
+    text-decoration:none;
+}
+
+.icons img {
+    width: 30px;
+    height: 30px;
+    margin-left: 40px;
+}
+
