@@ -1,8 +1,18 @@
+html {
+    width: 1080px;
+    left: 0;
+    right: 0;
+    margin:auto;
+    position: absolute;
+    overflow-x: hidden;
+}
+
 body {
     width: 1080px;
     margin: 0;
     padding: 0;
-    overflow:auto;overflow-x: hidden
+    overflow:auto;
+    /*overflow-x: hidden;*/
 }
 
 ul {
@@ -39,28 +49,31 @@ li {
 .firstPart {
     width: 1080px;
     height: 609px;
+    text-align: center;
 }
 
-.firstBackground {
+.lawyer {
     background-image: url("images/lawyer.jpg");
     background-repeat:no-repeat;
     background-attachment: scroll;
     background-size:100% 100%;
     width: 1080px;
     height: 609px;
-    left: 0;
+    /*left: 0;*/
     margin: 0;
     padding: 0;
     filter: brightness(90%);
+    position: absolute;
 }
 
-.firstPartWindow {
+.lawyerWindow {
     background-color: #0e3b5d;
     width: 330px;
     height: 370px;
     left: 95px;
     top: 120px;
     position: relative;
+    text-align: left;
     filter: brightness(100%);
 }
 
@@ -195,7 +208,7 @@ button {
     padding: 0;
 }
 
-.secondBackground {
+.glasses {
     width: 1080px;
     height: 720px;
     background-size: cover;
@@ -207,7 +220,7 @@ button {
     position: absolute;
 }
 
-.planBackground {
+.grid {
     background-image: url("images/grid.png");
     opacity: 0.15;
     width: 280px;
@@ -293,7 +306,7 @@ button {
     display: inline-block;
 }
 
-.thirdBackground {
+.notebook {
     width: 1080px;
     height: 410px;
     background-image: url("images/notebook.jpg");
@@ -305,7 +318,7 @@ button {
     position: absolute;
 }
 
-.backgroundColor {
+.notebookColor {
     width: 1080px;
     height: 410px;
     background-color: #033255;
