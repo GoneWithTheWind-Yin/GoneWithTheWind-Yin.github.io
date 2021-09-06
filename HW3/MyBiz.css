@@ -72,7 +72,7 @@ li {
 }
 
 .lawyerWindow {
-    background-color: #0e3b5d;
+    background-color: #0b3c5d;
     width: 330px;
     height: 370px;
     left: 95px;
@@ -102,7 +102,7 @@ li {
 }
 
 .thirdLine {
-    color: yellow;
+    color: #f9dc16;
     font-family:Arial,Helvetica,sans-serif;
     font-size: 12px;
     padding-top: 15px;
@@ -124,12 +124,12 @@ input {
 button {
     margin-top: 25px;
     margin-left: 40px;
-    background-color: #f9df1a;
+    background-color: #fadd16;
     color: black;
     width: 135px;
     height: 40px;
     border: none;
-    filter: brightness(105%);
+    filter: brightness(100%);
     font-family: "Montserrat", sans-serif;
     font-size: 10px;
     letter-spacing: 0.5px;
@@ -266,7 +266,7 @@ button {
     height: 450px;
     margin-left: 80px;
     margin-top: 80px;
-    background-color: white;
+    background-color: #f8f8f8;
     position: relative;
     float: left;
     display: inline-block;
@@ -279,7 +279,7 @@ button {
     height: 450px;
     margin-left: 35px;
     margin-top: 80px;
-    background-color: white;
+    background-color: #f8f8f8;
     position: relative;
     float: left;
     display: inline-block;
@@ -308,7 +308,7 @@ button {
 }
 
 .buy {
-    background-color: #1b3b5b;
+    background-color: #0b3b5b;
     color: white;
     position: relative;
     border: none;
@@ -372,14 +372,14 @@ button {
     font-size: 12px;
     height: 40px;
     width: 150px;
-    background-color: #f1da36;
+    background-color: #fadd16;
     margin-left: 5px;
 }
 
 .foot {
     width: 1080px;
     height: 250px;
-    background-color: #1e252f;
+    background-color: #1d2530;
     position: absolute;
 }
 
