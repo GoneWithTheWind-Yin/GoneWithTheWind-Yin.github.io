@@ -1,10 +1,12 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+
 html {
     width: 1080px;
     left: 0;
     right: 0;
     margin:auto;
     position: absolute;
-    overflow-x: hidden;
+    /*overflow-x: hidden;*/
 }
 
 body {
@@ -12,7 +14,6 @@ body {
     margin: 0;
     padding: 0;
     overflow:auto;
-    /*overflow-x: hidden;*/
 }
 
 ul {
@@ -31,6 +32,11 @@ li a {
 li {
     float: left;
     font-family:Arial,Helvetica,sans-serif;
+}
+
+.menu {
+    font-family: "Montserrat", sans-serif;
+    letter-spacing: -1.5px;
 }
 
 .rightPart{
@@ -59,7 +65,6 @@ li {
     background-size:100% 100%;
     width: 1080px;
     height: 609px;
-    /*left: 0;*/
     margin: 0;
     padding: 0;
     filter: brightness(90%);
@@ -79,7 +84,7 @@ li {
 
 .firstLine {
     color: white;
-    font-family:Arial,Helvetica,sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-size: 14px;
     padding-top: 45px;
     padding-left: 40px;
@@ -87,7 +92,9 @@ li {
 
 .secondLine {
     color: white;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    letter-spacing: -2px;
     font-size: 30px;
     padding-top: 4px;
     padding-left: 40px;
@@ -111,7 +118,7 @@ input {
     font-size: 24px;
     background-color: white;
     filter: brightness(100%);
-    font-family:Arial,Helvetica,sans-serif;
+    font-family: "Montserrat", sans-serif;
 }
 
 button {
@@ -123,9 +130,9 @@ button {
     height: 40px;
     border: none;
     filter: brightness(105%);
-    font-family:Arial,Helvetica,sans-serif;
-    font-size: 12px;
-
+    font-family: "Montserrat", sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.5px;
 }
 
 .secondPart {
@@ -144,9 +151,10 @@ button {
 }
 
 .secondPart h4 {
-    font-family:Arial,Helvetica,sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-weight: lighter;
     font-size: 16px;
+    letter-spacing: -0.5px;
 }
 
 .secondPart p {
@@ -177,7 +185,6 @@ button {
     margin: 0;
     padding: 0;
     font-size: 0;
-    font-family:Arial,Helvetica,sans-serif;
 }
 
 .quote {
@@ -187,6 +194,8 @@ button {
     font-weight: lighter;
     position: relative;
     color: black;
+    font-family: "Montserrat", sans-serif;
+    letter-spacing: -0.4px;
 }
 
 .author{
@@ -195,6 +204,7 @@ button {
     font-size: 12px;
     position: relative;
     color: #737373;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
 .author span {
@@ -233,7 +243,8 @@ button {
 .description {
     margin-top: 0;
     margin-left: 450px;
-    font-family:Arial,Helvetica,sans-serif;
+    font-family: "Montserrat", sans-serif;
+    letter-spacing: -0.4px;
     font-size: 12px;
     color: gray;
 }
@@ -242,6 +253,11 @@ button {
     padding-left: 510px;
     margin-top: 0;
     padding-top: 50px;
+    font-family: "Montserrat", sans-serif;
+    letter-spacing: -0.4px;
+}
+
+.planPrice {
     font-family:Arial,Helvetica,sans-serif;
 }
 
@@ -254,7 +270,8 @@ button {
     position: relative;
     float: left;
     display: inline-block;
-    font-family:Arial,Helvetica,sans-serif;
+    font-family: "Montserrat", sans-serif;
+    letter-spacing: -0.4px;
 }
 
 .standard, .corporate {
@@ -266,7 +283,8 @@ button {
     position: relative;
     float: left;
     display: inline-block;
-    font-family:Arial,Helvetica,sans-serif;
+    font-family: "Montserrat", sans-serif;
+    letter-spacing: -0.4px;
 }
 
 .planName, .basic p, .standard p, .corporate p, .planPrice, .buy {
@@ -330,7 +348,8 @@ button {
     text-align: center;
     position: relative;
     margin-top: 140px;
-    font-family:Arial,Helvetica,sans-serif;
+    font-family: "Montserrat", sans-serif;
+    letter-spacing: -0.4px;
 }
 
 .firstAdv, .secondAdv {
@@ -339,11 +358,14 @@ button {
 }
 
 .firstAdv {
-    font-size: 22px
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: -1.5px;
 }
 
 .secondAdv {
     font-size: 12px;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
 .try {
@@ -370,6 +392,8 @@ button {
 .webName {
     margin-top: 80px;
     color: white;
+    font-family: "Montserrat", sans-serif;
+    letter-spacing: -0.4px;
 }
 
 .webAddress {
