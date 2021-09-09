@@ -189,8 +189,8 @@ button {
 }
 
 .quote {
-    top: 40%;
-    left: 20.3%;
+    top: 125px;
+    left: 180px;
     font-size: 18px;
     font-weight: lighter;
     position: relative;
@@ -200,8 +200,8 @@ button {
 }
 
 .author{
-    top: 38%;
-    left: 41.5%;
+    top: 125px;
+    left: 447px;
     font-size: 12px;
     position: relative;
     color: #737373;
