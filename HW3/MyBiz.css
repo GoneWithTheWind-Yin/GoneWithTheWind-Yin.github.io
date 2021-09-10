@@ -60,7 +60,7 @@ li {
 
 .lawyer {
     background-image: url("images/lawyer.jpg");
-    background-repeat:no-repeat;
+    background-repeat: no-repeat;
     background-attachment: scroll;
     background-size:100% 100%;
     width: 1080px;
