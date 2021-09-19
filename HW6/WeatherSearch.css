@@ -1,0 +1,154 @@
+@import url(https://fonts.googleapis.com/css?family=Lato);
+
+html {
+    width: 700px;
+    left: 0;
+    right: 0;
+    margin:auto;
+    position: absolute;
+    background-color: #e6e6e6;
+}
+
+body {
+    width: 700px;
+    margin: 0;
+    padding: 0;
+
+}
+
+.weatherSearch {
+    margin-top: 60px;
+    width: 700px;
+    height: 550px;
+    position: absolute;
+}
+
+.searchBack {
+    background-image: url("images/banner.jpg");
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: 10% 20%;
+    /*background-size:100% 100%;*/
+    width: 700px;
+    height: 150px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+}
+
+.intro {
+    position: relative;
+    width: 700px;
+    height: 111px;
+    padding: 0;
+    margin-left: 60px;
+    font-family: "Lato", sans-serif;
+    color: #535353
+}
+
+.title {
+    font-size: 26px;
+    margin-top: 40px;
+    position: relative;
+}
+
+.description {
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.addressBack {
+    width: 700px;
+    height: 400px;
+    background-color: white;
+    position: absolute;
+}
+
+.address {
+    position: relative;
+    margin-left: 60px;
+    margin-top: 20px;
+    font-size: 18px;
+    color: #3853a8;
+    font-family: "Lato", sans-serif;
+}
+
+.star {
+    color: red;
+}
+
+input {
+    width: 580px;
+    height: 25px;
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+.city, .state {
+    margin-top: 20px;
+    float: left;
+}
+
+/*.city {*/
+/*    float: left;*/
+/*}*/
+
+.state {
+    margin-left: 68px;
+}
+
+.cityInput {
+    width: 252px;
+}
+
+.stateSelect {
+    width: 260px;
+}
+
+.stateSelect {
+    margin-top: 10px;
+    font-size: 21px;
+    padding: 2px;
+    border: 1px #8f8f9c solid;
+}
+
+.line {
+    color: #3853a8;
+    position: relative;
+    width: 588px;
+    margin-left: 0;
+    margin-top: 30px;
+    float: initial;
+}
+
+.currentLocation {
+    margin-top: 25px;
+    font-size: 22px
+}
+
+.checkbox {
+    width: 18px;
+    height: 18px;
+}
+
+.submit, .clear {
+    width: 150px;
+    height: 60px;
+    margin-top: 40px;
+    color: white;
+}
+
+.submit {
+    background-color: #516ba7;
+    border-width: 0 0 7px 0;
+    border-color: #384a75;
+    border-style: solid;
+}
+
+.clear {
+    background-color: #f4bb43;
+    border-width: 0 0 7px 0;
+    border-color: #ef8933;
+    border-style: solid;
+    /*margin-left: 2px;*/
+}
