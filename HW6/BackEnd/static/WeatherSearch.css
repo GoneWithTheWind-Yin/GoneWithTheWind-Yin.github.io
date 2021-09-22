@@ -1,7 +1,7 @@
-@import url(https://fonts.googleapis.com/css?family=Lato);
+@import url(https://fonts.googleapis.com/css?family=roboto);
 
 html {
-    width: 700px;
+    width: 900px;
     left: 0;
     right: 0;
     margin:auto;
@@ -10,16 +10,16 @@ html {
 }
 
 body {
-    width: 700px;
+    width: 900px;
     margin: 0;
     padding: 0;
 
 }
 
 .weatherSearch {
-    margin-top: 60px;
-    width: 700px;
-    height: 550px;
+    margin-top: 40px;
+    width: 600px;
+    height: 600px;
     position: absolute;
 }
 
@@ -29,8 +29,8 @@ body {
     background-attachment: scroll;
     background-position: 10% 20%;
     /*background-size:100% 100%;*/
-    width: 700px;
-    height: 150px;
+    width: 600px;
+    height: 130px;
     margin: 0;
     padding: 0;
     position: absolute;
@@ -38,17 +38,17 @@ body {
 
 .intro {
     position: relative;
-    width: 700px;
-    height: 111px;
+    width: 600px;
+    height: 103px;
     padding: 0;
-    margin-left: 60px;
-    font-family: "Lato", sans-serif;
+    margin-left: 40px;
+    font-family: "roboto", sans-serif;
     color: #535353
 }
 
 .title {
     font-size: 26px;
-    margin-top: 40px;
+    margin-top: 30px;
     position: relative;
 }
 
@@ -58,16 +58,16 @@ body {
 }
 
 .addressBack {
-    width: 700px;
-    height: 400px;
+    width: 600px;
+    height: 350px;
     background-color: white;
     position: absolute;
 }
 
 .address {
     position: relative;
-    margin-left: 60px;
-    margin-top: 20px;
+    margin-left: 40px;
+    margin-top: 15px;
     font-size: 18px;
     color: #3853a8;
     font-family: "Lato", sans-serif;
@@ -78,14 +78,14 @@ body {
 }
 
 input {
-    width: 580px;
+    width: 520px;
     height: 25px;
     margin-top: 10px;
     font-size: 18px;
 }
 
 .city, .state {
-    margin-top: 20px;
+    margin-top: 10px;
     float: left;
 }
 
@@ -94,15 +94,15 @@ input {
 /*}*/
 
 .state {
-    margin-left: 68px;
+    margin-left: 40px;
 }
 
 .cityInput {
-    width: 252px;
+    width: 235px;
 }
 
 .stateSelect {
-    width: 260px;
+    width: 243px;
 }
 
 .stateSelect {
@@ -115,27 +115,28 @@ input {
 .line {
     color: #3853a8;
     position: relative;
-    width: 588px;
+    width: 520px;
     margin-left: 0;
-    margin-top: 30px;
+    margin-top: 10px;
     float: initial;
 }
 
 .currentLocation {
-    margin-top: 25px;
-    font-size: 22px
+    margin-top: 15px;
+    font-size: 20px
 }
 
-.checkbox {
-    width: 18px;
-    height: 18px;
+.checkLocation {
+    width: 16px;
+    height: 16px;
 }
 
-.submit, .clear {
-    width: 150px;
+button {
+    width: 100px;
     height: 60px;
-    margin-top: 40px;
+    margin-top: 25px;
     color: white;
+    font-size: 20px;
 }
 
 .submit {
@@ -150,5 +151,4 @@ input {
     border-width: 0 0 7px 0;
     border-color: #ef8933;
     border-style: solid;
-    /*margin-left: 2px;*/
 }

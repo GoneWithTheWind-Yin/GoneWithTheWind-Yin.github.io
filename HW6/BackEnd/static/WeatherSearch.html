@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Search</title>
+    <link rel="stylesheet" href="../static/WeatherSearch.css">
+</head>
+<body>
+    <div class="weatherSearch">
+        <div class="searchBack"></div>
+        <div class="intro">
+            <p class="title"><strong>Weather Search</strong></p>
+            <p class="description">Fill out the form to get weather info!</p>
+        </div>
+        <div class="addressBack"></div>
+        <form class="address" name="address" method="get" onsubmit="submitForm()">
+            <div class="street">
+                <span class="street">Street</span><span class="star">*</span><br>
+                <label class="streetInput" id="streetInput">
+                    <input type="text" name="street" id="street" autocomplete="on" required><br>
+                </label>
+            </div>
+            <div class="city">
+                <span>City</span><span class="star">*</span><br>
+                <label id="cityInput">
+                    <input type="text" class="cityInput" name="city" id="city" autocomplete="on" required><br>
+                </label>
+            </div>
+            <div class="state">
+                <span>State</span><span class="star">*</span><br>
+                <label >
+                    <select class="stateSelect" name="state" id="state">
+                        <option value ="test1">California</option>
+                        <option value ="test2">test2</option>
+                        <option value ="test3">test3</option>
+                        <option value ="test4">test4</option>
+                    </select>
+                </label>
+            </div>
+            <br><br><br><br>
+            <hr class="line">
+            <div class="currentLocation">
+                Want us to auto-detect your location? Check here
+                <label>
+                    <input type="checkbox" class="checkLocation" id="checkLocation" onclick="checkboxOnClick(this)">
+                </label>
+            </div>
+            <div>
+                <button class="submit" type="submit">SUBMIT</button>
+                <button class="clear" type="reset">CLEAR</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="noRecordsDisplay">
+
+    </div>
+
+    <div id="result" class="result" style="font-family: 'roboto', sans-serif; color: #878787; font-weight: 400">
+        <div id="card" class="card" style="top: 580px; position: absolute; background-color: white; width: 740px; left:-70px">
+            <p style="font-size: 26px; margin-left: 30px">Los Angles, CA 90007, USA</p>
+            <img src="images/clear_day.svg" width="150px" height="150px" style="margin-left: 30px;">
+            <p style="font-size: 150px; font-weight: 100; float: right; margin: 0 70px 0 0;">80.0°</p>
+            <p style="margin-left: 80px; margin-top: 0; font-size:24px">clear</p>
+            <div id="humidity" style="margin-left: 20px; text-align: center; float: left; width: 100px">
+                <p>Humidity</p>
+                <img src="https://cdn2.iconfinder.com/data/icons/weather-74/24/weather-16-512.png" alt="Humidity" width="30px" height="30px">
+                <p>98%</p>
+            </div>
+            <div id="pressure" style="margin-left: 20px; text-align: center; float: left; width: 100px">
+                <p>Pressure</p>
+                <img src="https://cdn2.iconfinder.com/data/icons/weather-74/24/weather-25-512.png" alt="Humidity" width="30px" height="30px">
+                <p>30inHg</p>
+            </div>
+            <div id="windSpeed" style="margin-left: 20px; text-align: center; float: left; width: 100px">
+                <p>Wind Speed</p>
+                <img src="https://cdn2.iconfinder.com/data/icons/weather-74/24/weather-27-512.png" alt="Humidity" width="30px" height="30px">
+                <p>9.64mph</p>
+            </div>
+            <div id="visibility" style="margin-left: 20px; text-align: center; float: left; width: 100px">
+                <p>Visibility</p>
+                <img src="https://cdn2.iconfinder.com/data/icons/weather-74/24/weather-30-512.png" alt="Humidity" width="30px" height="30px">
+                <p>2.61mi</p>
+            </div>
+            <div id="cloudCover" style="margin-left: 20px; text-align: center; float: left; width: 100px">
+                <p>Cloud Cover</p>
+                <img src="https://cdn2.iconfinder.com/data/icons/weather-74/24/weather-28-512.png" alt="Humidity" width="30px" height="30px">
+                <p>0%</p>
+            </div>
+            <div id="uvLevel" style="margin-left: 20px; text-align: center; float: left; width: 100px">
+                <p>UV Level</p>
+                <img src="https://cdn2.iconfinder.com/data/icons/weather-74/24/weather-24-512.png" alt="Humidity" width="30px" height="30px">
+                <p>4</p>
+            </div>
+        </div>
+        <table id="weatherResult" class="weatherResult">
+            <thead id="weatherResultHead">
+
+            </thead>
+            <tbody id="weatherResultBody">
+
+            </tbody>
+        </table>
+    </div>
+
+    <div id="weatherDetail" class="weatherDetail">
+        <div id="detailTitle" class="detailTitle">
+
+        </div>
+        <div id="detailCard" class="detailCard">
+
+        </div>
+    </div>
+    <div id="weatherChart" class="weatherChart">
+        <div id="chartTitle" class="chartTitle">
+
+        </div>
+        <div id="chartCard" class="chartCard">
+
+        </div>
+    </div>
+
+<script>
+    function submitForm() {
+        let street = document.getElementById("street").value;
+        let city = document.getElementById("city").value;
+        let state = document.getElementById("state").value;
+        let location = ""
+        let address = ""
+        let json = ""
+
+        if (document.getElementById("checkLocation").checked) {
+            let ipInfoUrl = "https://ipinfo.io/?token=0b676f0b07b1a9"
+            fetch(ipInfoUrl).then(function(response) {
+                return response.json();
+            }).then(function(data) {
+                console.log(data);
+            }).catch(function(e) {
+                console.log(e);
+            })
+        }
+        if (json === "") {
+            let geocodingUrl = "https://maps.googleapis.com/maps/api/geocode/json?address="
+            geocodingUrl += street + "," + city + "," + state + "" + "&key=AIzaSyAd9Qbqgx8fyM2WufIIkdlRcBt8mDrtdoM"
+            fetch(geocodingUrl).then(function(response) {
+                return response.json();
+            }).then(function(data) {
+                let lat = data["results"][0]["geometry"]["location"]["lat"]
+                let lng = data["results"][0]["geometry"]["location"]["lng"]
+                location = lat + "," + lng
+                address = data["result"][0]["formatted_address"]
+                console.log(data);
+            }).catch(function(e) {
+                console.log(e);
+            })
+
+        } else {
+            // 可能需要错误处理
+            location = json.loc
+            address = json.city + "," + json.region + "," + json.postal
+            let geocodingUrl = "https://maps.googleapis.com/maps/api/geocode/json?address="
+            geocodingUrl += address + "&key=AIzaSyAd9Qbqgx8fyM2WufIIkdlRcBt8mDrtdoM"
+            fetch(geocodingUrl).then(function(response) {
+                return response.json();
+            }).then(function(data) {
+                address = data["result"][0]["formatted_address"]
+                console.log(data);
+            }).catch(function(e) {
+                console.log(e);
+            })
+        }
+
+
+
+
+    }
+
+    function generateCard(address, weather) {
+        if (weather === "") {
+            let no_record = document.getElementById("noRecordsDisplay")
+            no_record.innerHTML = "<div id='noRecord' align='center' style='background-color: white; width: 600px; top: 550px; position: relative; height: 30px; font-size:24px'>No Records have been found.</div>"
+        } else {
+
+        }
+    }
+
+
+
+    function requestBackend(location, timeSteps, units) {
+        // 后续改为在线的url
+        let backend_url = "http://127.0.0.1:8080/search?"
+        backend_url += "location=" + location
+        if (timeSteps !== "") {
+            backend_url += "timesteps=" + timeSteps
+        }
+        if (units !== "") {
+            backend_url += "units=" + units
+        }
+
+        let res = fetch(backend_url)
+        res.then(res => res.json())
+           .then(function(weatherData) {
+            return weatherData
+        })
+    }
+
+    function checkboxOnClick(checkbox) {
+        if (checkbox.checked) {
+            document.getElementById("street").disabled = true
+            document.getElementById("city").disabled = true
+            document.getElementById("state").disabled = true
+        } else {
+            document.getElementById("street").disabled = false
+            document.getElementById("city").disabled = false
+            document.getElementById("state").disabled = false
+        }
+    }
+</script>
+</body>
+</html>
