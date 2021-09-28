@@ -311,7 +311,7 @@ function generateChart(data) {
     weatherChart.innerHTML = "<div id=\"chartTitle\" class=\"chartTitle\" style=\"text-align: center;\">\n"
         + "<p style=\"font-size: 46px; font-weight: 300; margin-top: 3px; margin-bottom: 0\">Weather Charts</p>\n"
         + "<hr style=\"width: 450px; color: white; margin-top: 15px\">\n" +
-        "<img src=\"../static/images/point-down-512.png\" width=\"50px\" height=\"50px\" onclick='generateCharts()'></div>"
+        "<img src=\"../static/images/point-down-512.png\" id=\"showButton\" width=\"50px\" height=\"50px\" onclick='generateCharts()'>"
         + "<figure class=\"temperature-figure\"><div id=\"tempContainer\"></div></figure>";
 }
 
@@ -335,8 +335,23 @@ function getSecond(time) {
     return date.getTime();
 }
 
+function clearCharts() {
+    weatherChart = document.getElementById("weatherChart");
+    weatherChart.innerHTML = "<div id=\"chartTitle\" class=\"chartTitle\" style=\"text-align: center;\">\n"
+        + "<p style=\"font-size: 46px; font-weight: 300; margin-top: 3px; margin-bottom: 0\">Weather Charts</p>\n"
+        + "<hr style=\"width: 450px; color: white; margin-top: 15px\">\n" +
+        "<img src=\"../static/images/point-down-512.png\" id=\"showButton\" width=\"50px\" height=\"50px\" onclick='generateCharts()'>"
+        + "<figure class=\"temperature-figure\"><div id=\"tempContainer\"></div></figure>";
+}
+
 function generateCharts() {
+    weatherChart.innerHTML = "<div id=\"chartTitle\" class=\"chartTitle\" style=\"text-align: center;\">\n"
+        + "<p style=\"font-size: 46px; font-weight: 300; margin-top: 3px; margin-bottom: 0\">Weather Charts</p>\n"
+        + "<hr style=\"width: 450px; color: white; margin-top: 15px\">\n" +
+        "<img src=\"../static/images/point-up-512.png\" id=\"showButton\" width=\"50px\" height=\"50px\" onclick='clearCharts()'>"
+        + "<figure class=\"temperature-figure\"><div id=\"tempContainer\"></div></figure>";
     temperatureRange();
+
     // var backend_url = "http://127.0.0.1:8080/search?"
     // backend_url += "location=" + globalLocation
     // backend_url += "&timesteps=" + "1h"
