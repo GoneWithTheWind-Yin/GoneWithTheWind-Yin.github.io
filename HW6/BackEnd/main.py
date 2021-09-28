@@ -1,3 +1,5 @@
+import json
+
 import requests
 from flask import Flask, render_template, request, jsonify
 
@@ -15,20 +17,27 @@ def do_search():
     data = args.to_dict()
     location = data["location"]
     time_steps = "1d"
-    if data["location"] != "":
+    if "timeSteps" in data:
         time_steps = data["timeSteps"]
     units = "imperial"
-    if data["units"] != "":
-        time_steps = data["units"]
+    if "units" in data:
+        units = data["units"]
+    field = "temperature,temperatureApparent,temperatureMin,temperatureMax,windSpeed,windDirection,humidity,pressureSeaLevel,uvIndex,weatherCode,precipitationProbability,precipitationType,sunriseTime,sunsetTime,visibility,moonPhase,cloudCover"
+    if "field" in data:
+        field = data["field"]
 
-    tomorrow_url = "https://api.tomorrow.io/v4/timelines?location=" + location + "&fields=temperature,temperatureApparent,temperatureMin,temperatureMax,windSpeed,windDirection,humidity,pressureSeaLevel,uvIndex,weatherCode,precipitationProbability,precipitationType,sunriseTime,sunsetTime,visibility,moonPhase,cloudCover"
+    tomorrow_url = "https://api.tomorrow.io/v4/timelines?location=" + location
+    tomorrow_url += "&fields=" + field
     tomorrow_url += "&timesteps=" + time_steps
-    tomorrow_url += "units=" + units
-    tomorrow_url += "&apikey=mMSmnGIVw3Fr1WsrBUpy8k7wcIMqzbNg"
+    tomorrow_url += "&units=" + units
+    tomorrow_url += "&timezone=America/Los_Angeles"
+    tomorrow_url += "&apikey=XPIAROop3O9FnGayZBJxA5xxmb7BS2ix"
 
     temperature_response = requests.get(tomorrow_url).json()
+    print(json.dumps(temperature_response))
     temperature_response = jsonify(temperature_response)
-    print(temperature_response)
+
+    # weather_data = str(temperature_response.data, "utf-8")
 
     return temperature_response
 
