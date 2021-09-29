@@ -31,7 +31,7 @@ def do_search():
     tomorrow_url += "&timesteps=" + time_steps
     tomorrow_url += "&units=" + units
     tomorrow_url += "&timezone=America/Los_Angeles"
-    tomorrow_url += "&apikey=mMSmnGIVw3Fr1WsrBUpy8k7wcIMqzbNg"
+    tomorrow_url += "&apikey=XPIAROop3O9FnGayZBJxA5xxmb7BS2ix"
 
     temperature_response = requests.get(tomorrow_url).json()
     print(json.dumps(temperature_response))
