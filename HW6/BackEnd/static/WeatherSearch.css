@@ -2,7 +2,7 @@
 
 html {
     width: 1100px;
-    left: 200px;
+    left: 330px;
     right: 0;
     margin:auto;
     position: absolute;
@@ -151,7 +151,7 @@ body {
 }
 
 .clear {
-    background-color: #f4bb43;
+    background-color: #f9b940;
     border-width: 0 0 7px 0;
     border-color: #ef8933;
     border-style: solid;
@@ -171,19 +171,19 @@ table {
 
 .temperature-figure, .highcharts-data-table table {
     min-width: 310px;
-    max-width: 800px;
+    max-width: 1000px;
     margin: 1em auto;
 }
 
 #tempContainer {
-    height: 400px;
+    width: 1000px;
 }
 
 .highcharts-data-table table {
 	font-family: Verdana, sans-serif;
 	border-collapse: collapse;
 	border: 1px solid #EBEBEB;
-	margin: 10px auto;
+	margin: auto;
 	text-align: center;
 	width: 100%;
 	max-width: 500px;
@@ -209,9 +209,9 @@ table {
 
 #weatherContainer {
   height: 400px;
-  max-width: 800px;
+  max-width: 1000px;
   min-width: 380px;
-  margin: 0 auto;
+  margin: 40px 0 0 0;
 }
 
 #loading {
@@ -219,8 +219,8 @@ table {
   text-align: center;
 }
 
-.weather-figure, .highcharts-data-table table {
+.weather-figure{
   min-width: 350px;
-  max-width: 800px;
+  max-width: 1000px;
   margin: 1em auto;
 }

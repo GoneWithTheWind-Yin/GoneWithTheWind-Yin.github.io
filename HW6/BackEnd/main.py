@@ -17,8 +17,8 @@ def do_search():
     data = args.to_dict()
     location = data["location"]
     time_steps = "1d"
-    if "timeSteps" in data:
-        time_steps = data["timeSteps"]
+    if "timesteps" in data:
+        time_steps = data["timesteps"]
     units = "imperial"
     if "units" in data:
         units = data["units"]
@@ -31,7 +31,7 @@ def do_search():
     tomorrow_url += "&timesteps=" + time_steps
     tomorrow_url += "&units=" + units
     tomorrow_url += "&timezone=America/Los_Angeles"
-    tomorrow_url += "&apikey=XPIAROop3O9FnGayZBJxA5xxmb7BS2ix"
+    tomorrow_url += "&apikey=mMSmnGIVw3Fr1WsrBUpy8k7wcIMqzbNg"
 
     temperature_response = requests.get(tomorrow_url).json()
     print(json.dumps(temperature_response))
