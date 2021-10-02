@@ -21,7 +21,10 @@ var weatherDict = {
     6201: "freezing_rain_heavy",
     4200: "rain_light",
     4001: "rain",
-    4201: "rain_heavy"
+    4201: "rain_heavy",
+    3000: "wind_light",
+    3001: "wind",
+    3002: "wind_strong"
 }
 var weatherDict2 = {
     1000: "Clear",
@@ -46,7 +49,10 @@ var weatherDict2 = {
     6201: "Heavy Freezing Rain",
     4200: "Light Rain",
     4001: "Rain",
-    4201: "Heavy Rain"
+    4201: "Heavy Rain",
+    3000: "Light Wind",
+    3001: "Wind",
+    3002: "Strong Wind",
 }
 
 var monthDict = {
@@ -142,21 +148,21 @@ function generateCard(address, weather) {
         var visibility = weather["data"]["timelines"][0]["intervals"][0]["values"]["visibility"];
         var cloudCover = weather["data"]["timelines"][0]["intervals"][0]["values"]["cloudCover"];
         var UV = weather["data"]["timelines"][0]["intervals"][0]["values"]["uvIndex"];
-        card.innerHTML = "<p style=\"font-size: 26px; margin-left: 30px; font-weight: 300;\">" + address + "</p>"
+        card.innerHTML = "<p style=\"font-size: 26px; margin-left: 30px; margin-bottom: 10px; font-weight: 300;\">" + address + "</p>"
             + "<img src=\"../static/images/" + weatherName + ".svg\" width=\"150px\" height=\"150px\" style=\"margin-left: 30px;\" alt=\"weather image\">"
             + "<p style=\"font-size: 140px; font-weight: 300; float: right; margin: 0 60px 0 0;\">" + weatherTem + "°</p>"
-            + "<div style='font-size: 22px; margin-left: 30px; width:150px; text-align: center; font-weight: 300;;'>" + weatherDes + "</div>"
-            + "<div id=\"humidity\" style=\"margin-left: 20px; text-align: center; float: left; width: 100px\">\n<p>Humidity</p>\n"
+            + "<div style='font-size: 22px; margin-left: 30px; width:150px; text-align: center; font-weight: 300;'>" + weatherDes + "</div>"
+            + "<div id=\"humidity\" style=\"margin-left: 20px; margin-top: 10px; text-align: center; float: left; width: 100px\">\n<p>Humidity</p>\n"
             + "<img src=\"https://cdn2.iconfinder.com/data/icons/weather-74/24/weather-16-512.png\" alt=\"Humidity\" width=\"30px\" height=\"30px\">\n<p>" + humidity + "%</p></div>"
-            + "<div id=\"pressure\" style=\"margin-left: 20px; text-align: center; float: left; width: 100px\">\n<p>Pressure</p>\n"
+            + "<div id=\"pressure\" style=\"margin-left: 20px; margin-top: 10px; text-align: center; float: left; width: 100px\">\n<p>Pressure</p>\n"
             + "<img src=\"https://cdn2.iconfinder.com/data/icons/weather-74/24/weather-25-512.png\" alt=\"Pressure\" width=\"30px\" height=\"30px\">\n<p>" + pressure + "inHg</p></div>"
-            + "<div id=\"windSpeed\" style=\"margin-left: 20px; text-align: center; float: left; width: 100px\">\n<p>Wind Speed</p>\n"
+            + "<div id=\"windSpeed\" style=\"margin-left: 20px; margin-top: 10px; text-align: center; float: left; width: 100px\">\n<p>Wind Speed</p>\n"
             + "<img src=\"https://cdn2.iconfinder.com/data/icons/weather-74/24/weather-27-512.png\" alt=\"Wind Speed\" width=\"30px\" height=\"30px\">\n<p>" + windSpeed + "mph</p></div>"
-            + "<div id=\"visibility\" style=\"margin-left: 20px; text-align: center; float: left; width: 100px\">\n<p>Visibility</p>\n"
+            + "<div id=\"visibility\" style=\"margin-left: 20px; margin-top: 10px; text-align: center; float: left; width: 100px\">\n<p>Visibility</p>\n"
             + "<img src=\"https://cdn2.iconfinder.com/data/icons/weather-74/24/weather-30-512.png\" alt=\"Visibility\" width=\"30px\" height=\"30px\">\n<p>" + visibility + "mi</p></div>"
-            + "<div id=\"cloudCover\" style=\"margin-left: 20px; text-align: center; float: left; width: 100px\">\n<p>Cloud Cover</p>\n"
+            + "<div id=\"cloudCover\" style=\"margin-left: 20px; margin-top: 10px; text-align: center; float: left; width: 100px\">\n<p>Cloud Cover</p>\n"
             + "<img src=\"https://cdn2.iconfinder.com/data/icons/weather-74/24/weather-28-512.png\" alt=\"Cloud Cover\" width=\"30px\" height=\"30px\">\n<p>" + cloudCover + "%</p></div>"
-            + "<div id=\"uvLevel\" style=\"margin-left: 20px; text-align: center; float: left; width: 100px\">\n<p>UV Level</p>\n"
+            + "<div id=\"uvLevel\" style=\"margin-left: 20px; margin-top: 10px; text-align: center; float: left; width: 100px\">\n<p>UV Level</p>\n"
             + "<img src=\"https://cdn2.iconfinder.com/data/icons/weather-74/24/weather-24-512.png\" alt=\"UV Level\" width=\"30px\" height=\"30px\">\n<p>" + UV + "</p></div>";
 
         var forcast = document.getElementById("forecast")
@@ -210,8 +216,8 @@ function parseDate(time) {
 
 function requestBackendForCard(address, location, timeSteps, units) {
     // 后续改为在线的url
-    // var backend_url = "http://127.0.0.1:8080/search?"
-    var backend_url = "https://flaskbackend-1998.wl.r.appspot.com/search?"
+    var backend_url = "http://127.0.0.1:8080/search?"
+    // var backend_url = "https://flaskbackend-1998.wl.r.appspot.com/search?"
     backend_url += "location=" + location
     if (timeSteps !== "") {
         backend_url += "&timesteps=" + timeSteps
@@ -357,8 +363,8 @@ function hourlyWeather() {
     let weatherChart = document.getElementById("secondChart");
     weatherChart.innerHTML += "<div><figure class=\"weather-figure\"><div id=\"weatherContainer\"><div id=\"loading\"></div></figure></div>";
 
-    // var backend_url = "http://127.0.0.1:8080/search?"
-    var backend_url = "https://flaskbackend-1998.wl.r.appspot.com/search?"
+    var backend_url = "http://127.0.0.1:8080/search?"
+    // var backend_url = "https://flaskbackend-1998.wl.r.appspot.com/search?"
     backend_url += "location=" + globalLocation
     backend_url += "&timesteps=" + "1h"
     backend_url += "&field=" + "temperature,temperatureApparent,temperatureMin,temperatureMax,windSpeed,windDirection,humidity,pressureSeaLevel,uvIndex"
@@ -709,7 +715,7 @@ Meteogram.prototype.getChartOptions = function () {
             color: Highcharts.getOptions().colors[1],
             lineWidth: 1.5,
             data: this.winds,
-            vectorLength: 18,
+            vectorLength: 12,
             yOffset: -15,
             tooltip: {
                 valueSuffix: ' m/s'
