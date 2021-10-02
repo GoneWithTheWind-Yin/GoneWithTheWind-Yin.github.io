@@ -216,8 +216,8 @@ function parseDate(time) {
 
 function requestBackendForCard(address, location, timeSteps, units) {
     // 后续改为在线的url
-    var backend_url = "http://127.0.0.1:8080/search?"
-    // var backend_url = "https://flaskbackend-1998.wl.r.appspot.com/search?"
+    // var backend_url = "http://127.0.0.1:8080/search?"
+    var backend_url = "https://flaskbackend-1998.wl.r.appspot.com/search?"
     backend_url += "location=" + location
     if (timeSteps !== "") {
         backend_url += "&timesteps=" + timeSteps
@@ -363,8 +363,8 @@ function hourlyWeather() {
     let weatherChart = document.getElementById("secondChart");
     weatherChart.innerHTML += "<div><figure class=\"weather-figure\"><div id=\"weatherContainer\"><div id=\"loading\"></div></figure></div>";
 
-    var backend_url = "http://127.0.0.1:8080/search?"
-    // var backend_url = "https://flaskbackend-1998.wl.r.appspot.com/search?"
+    // var backend_url = "http://127.0.0.1:8080/search?"
+    var backend_url = "https://flaskbackend-1998.wl.r.appspot.com/search?"
     backend_url += "location=" + globalLocation
     backend_url += "&timesteps=" + "1h"
     backend_url += "&field=" + "temperature,temperatureApparent,temperatureMin,temperatureMax,windSpeed,windDirection,humidity,pressureSeaLevel,uvIndex"
