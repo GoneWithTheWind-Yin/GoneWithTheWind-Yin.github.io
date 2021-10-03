@@ -99,7 +99,7 @@ function submitForm(event) {
                 globalLocation = location
                 globalAddress = address
                 var geocodingUrl = "https://maps.googleapis.com/maps/api/geocode/json?address="
-                geocodingUrl += address + "&key=AIzaSyAd9Qbqgx8fyM2WufIIkdlRcBt8mDrtdoM"
+                geocodingUrl += address + "&key=AIzaSyAd9Qbqgx8fyM2WufIIkdlRcBt8mDrtdoM&language=en_US"
                 fetch(geocodingUrl).then(response => response.json())
                     .then(function (geoData) {
                         console.log(geoData)
@@ -114,7 +114,7 @@ function submitForm(event) {
         })
     } else {
         var geocodingUrl = "https://maps.googleapis.com/maps/api/geocode/json?address="
-        geocodingUrl += street + "," + city + "," + state + "" + "&key=AIzaSyAd9Qbqgx8fyM2WufIIkdlRcBt8mDrtdoM"
+        geocodingUrl += street + "," + city + "," + state + "" + "&key=AIzaSyAd9Qbqgx8fyM2WufIIkdlRcBt8mDrtdoM&language=en_US"
         fetch(geocodingUrl).then(res => res.json())
             .then(function (data) {
                 var lat = data["results"][0]["geometry"]["location"]["lat"]
