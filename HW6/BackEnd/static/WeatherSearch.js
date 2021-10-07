@@ -1,30 +1,30 @@
 var weatherDict = {
-    1000: "clear_day",
-    1100: "mostly_clear_day",
-    1101: "partly_cloudy_day",
-    1102: "mostly_cloudy",
-    1001: "cloudy",
-    2000: "fog",
-    2001: "fog_light",
-    8000: "tstorm",
-    5001: "flurries",
-    5100: "snow_light",
-    5000: "snow",
-    5101: "snow_heavy",
-    7102: "ice_pellets_light",
-    7000: "ice_pellets",
-    7101: "ice_pellets_heavy",
-    4000: "drizzle",
-    6000: "freezing_drizzle",
-    6200: "freezing_rain_light",
-    6001: "freezing_rain",
-    6201: "freezing_rain_heavy",
-    4200: "rain_light",
-    4001: "rain",
-    4201: "rain_heavy",
-    3000: "wind_light",
-    3001: "wind",
-    3002: "wind_strong"
+    1000: "clear_day.svg",
+    1100: "mostly_clear_day.svg",
+    1101: "partly_cloudy_day.svg",
+    1102: "mostly_cloudy.svg",
+    1001: "cloudy.svg",
+    2000: "fog.svg",
+    2001: "fog_light.svg",
+    8000: "tstorm.svg",
+    5001: "flurries.svg",
+    5100: "snow_light.svg",
+    5000: "snow.svg",
+    5101: "snow_heavy.svg",
+    7102: "ice_pellets_light.svg",
+    7000: "ice_pellets.svg",
+    7101: "ice_pellets_heavy.svg",
+    4000: "drizzle.svg",
+    6000: "freezing_drizzle.svg",
+    6200: "freezing_rain_light.svg",
+    6001: "freezing_rain.svg",
+    6201: "freezing_rain_heavy.svg",
+    4200: "rain_light.svg",
+    4001: "rain.svg",
+    4201: "rain_heavy.svg",
+    3000: "wind_light.jpg",
+    3001: "wind.png",
+    3002: "wind_strong.png"
 }
 var weatherDict2 = {
     1000: "Clear",
@@ -133,7 +133,7 @@ function submitForm(event) {
 }
 
 function generateCard(address, weather) {
-    if (weather.data === undefined) {
+    if (weather === undefined || weather.data === undefined) {
         var no_record = document.getElementById("noRecordsDisplay");
         no_record.innerHTML = "<div id='noRecord' align='center' style='background-color: white; width: 600px; top: 550px; position: relative; height: 30px; font-size:24px; font-family: Roboto, sans-serif;'>No Records have been found.</div>";
     } else {
@@ -149,7 +149,7 @@ function generateCard(address, weather) {
         var cloudCover = weather["data"]["timelines"][0]["intervals"][0]["values"]["cloudCover"];
         var UV = weather["data"]["timelines"][0]["intervals"][0]["values"]["uvIndex"];
         card.innerHTML = "<p style=\"font-size: 26px; margin-left: 30px; margin-bottom: 10px; font-weight: 300;\">" + address + "</p>"
-            + "<img src=\"../static/images/" + weatherName + ".svg\" width=\"150px\" height=\"150px\" style=\"margin-left: 30px;\" alt=\"weather image\">"
+            + "<img src=\"../static/images/" + weatherName + "\" width=\"150px\" height=\"150px\" style=\"margin-left: 30px;\" alt=\"weather image\">"
             + "<p style=\"font-size: 140px; font-weight: 300; float: right; margin: 0 60px 0 0;\">" + weatherTem + "°</p>"
             + "<div style='font-size: 22px; margin-left: 30px; width:150px; text-align: center; font-weight: 300;'>" + weatherDes + "</div>"
             + "<div id=\"humidity\" style=\"margin-left: 20px; margin-top: 10px; text-align: center; float: left; width: 100px\">\n<p>Humidity</p>\n"
@@ -188,7 +188,7 @@ function generateCard(address, weather) {
             console.log(dayWeather);
             body.innerHTML += "<div style=\"margin-top: 5px; height: 60px; text-align: center; background-color: white;\" onclick='generateDetail(" + JSON.stringify(dayWeather) + ")' >"
                 + "<div style=\"width: 330px; float: left; margin-top: 25px\">" + time + "</div>\n<div style=\"width: 230px; float: left;\">"
-                + "<img src=\"../static/images/" + weatherDict[code] + ".svg\" height=\"60px\" width=\"60px\" style=\" vertical-align:middle\">\n"
+                + "<img src=\"../static/images/" + weatherDict[code] + "\" height=\"60px\" width=\"60px\" style=\" vertical-align:middle\">\n"
                 + "<span style=\"margin-left: 15px;\">" + weatherDict2[code] + "</span></div>"
                 + "<div style=\"width: 180px; float: left; margin-top: 25px\">" + tempHigh + "</div>"
                 + "<div style=\"width: 180px; float: left; margin-top: 25px\">" + tempLow + "</div>"
@@ -298,7 +298,7 @@ function generateDetail(data) {
     var sunRise = data["values"]["sunriseTime"];
     var sunSet = data["values"]["sunsetTime"];
     detail.innerHTML += "<div id=\"detailCard\" class=\"detailCard\" style=\"margin-top: 30px; background-image: linear-gradient(white, #3a4f75); width: 600px; position: absolute; \">\n"
-        + "<img src=\"../static/images/" + weatherDict[weatherCode] + ".svg\" height=\"200px\" width=\"200px\" style=\"float: right; margin-right: 20px; margin-top: 0\">"
+        + "<img src=\"../static/images/" + weatherDict[weatherCode] + "\" height=\"200px\" width=\"200px\" style=\"float: right; margin-right: 20px; margin-top: 0\">"
         + "<p style=\"color: #3b4f76; font-size: 30px; margin: 25px 0 0 20px\">" + parseDate(time) + "</p>"
         + "<p style=\"color: #3b4f76; font-size: 30px; margin: 20px 0 0 20px\">" + weatherDict2[weatherCode] + "</p>"
         + "<p style=\"color: #3b4f76; font-size: 36px; margin: 20px 0 0 20px\">" + temperatureMax + "°F/" + temperatureMin + "°F</p>"
@@ -438,7 +438,7 @@ function temperatureRange() {
             lineColor: '#f19e27',
             lineWidth: 2,
             fillColor: {
-                linearGradient: [0, 100, 0, 300],
+                linearGradient: [0, 80, 0, 300],
                 stops: [
                     [0, Highcharts.getOptions().colors[3]],
                     [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
@@ -502,7 +502,7 @@ Meteogram.prototype.drawBlocksForWindArrows = function (chart) {
 
     // Center items in block
     chart.get('windbarbs').markerGroup.attr({
-        translateX: chart.get('windbarbs').markerGroup.translateX + 4
+        translateX: chart.get('windbarbs').markerGroup.translateX + 5
     });
 
 };
