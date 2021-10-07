@@ -438,7 +438,7 @@ function temperatureRange() {
             lineColor: '#f19e27',
             lineWidth: 2,
             fillColor: {
-                linearGradient: [0, 80, 0, 300],
+                linearGradient: [0, 100, 0, 300],
                 stops: [
                     [0, Highcharts.getOptions().colors[3]],
                     [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
