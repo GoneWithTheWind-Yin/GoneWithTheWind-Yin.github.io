@@ -22,9 +22,9 @@ var weatherDict = {
     4200: "rain_light.svg",
     4001: "rain.svg",
     4201: "rain_heavy.svg",
-    3000: "wind_light.jpg",
-    3001: "wind.png",
-    3002: "wind_strong.png"
+    3000: "wind_light.svg",
+    3001: "wind.svg",
+    3002: "wind_strong.svg"
 }
 var weatherDict2 = {
     1000: "Clear",
@@ -117,6 +117,9 @@ function submitForm(event) {
         geocodingUrl += street + "," + city + "," + state + "" + "&key=AIzaSyAd9Qbqgx8fyM2WufIIkdlRcBt8mDrtdoM&language=en_US"
         fetch(geocodingUrl).then(res => res.json())
             .then(function (data) {
+                if (data["results"][0] === undefined) {
+                    generateCard(undefined, undefined);
+                }
                 var lat = data["results"][0]["geometry"]["location"]["lat"]
                 var lng = data["results"][0]["geometry"]["location"]["lng"]
                 location = lat + "," + lng
