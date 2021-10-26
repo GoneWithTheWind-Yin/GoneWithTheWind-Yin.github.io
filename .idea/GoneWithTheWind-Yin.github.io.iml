@@ -16,5 +16,6 @@
     <orderEntry type="library" name="exporting" level="application" />
     <orderEntry type="library" name="windbarb" level="application" />
     <orderEntry type="library" name="pattern-fill" level="application" />
+    <orderEntry type="library" name="bootstrap" level="application" />
   </component>
 </module>
