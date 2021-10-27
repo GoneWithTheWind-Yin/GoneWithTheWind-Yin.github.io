@@ -17,10 +17,11 @@
 // [START gae_node_request_example]
 const express = require('express');
 const url = require("url");
-const http = require('http');
 const https = require('https');
 const app = express();
 const PORT = process.env.PORT || 8080;
+
+
 
 app.get('/search', function (req, res) {
     var params = url.parse(req.url, true).query;

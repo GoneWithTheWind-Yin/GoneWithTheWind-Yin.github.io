@@ -1,40 +1,52 @@
 <div id="formContainer" class="container">
-    <form id="searchForm">
+    <form id="searchForm" (ngSubmit)="submitForm()">
         <div id="title">
             <h3>Weather Search🌤</h3>
         </div>
         <div class="addressForm">
-            <div class="formRow">
+            <div class="form-group row" style="margin-top: 20px">
                 <label class="col-sm-2 col-form-label"></label>
                 <label class="col-sm-2 col-form-label">Street<span class="star">*</span></label>
-                <input id="street" class="col-sm-6">
+                <div class="col-sm-6">
+                    <input id="street" [ngClass]="{'form-control': true, 'is-invalid': street.invalid && street.touched}" [disabled]="searchForm.currentLocation"
+                           [(ngModel)]="searchForm.street" name="street" #street="ngModel" required>
+                    <div class="invalid-feedback">Please enter a valid street.</div>
+                </div>
             </div>
-            <div class="formRow">
+            <div class="form-group row" style="margin-top: 20px">
                 <label class="col-sm-2 col-form-label"></label>
                 <label class="col-sm-2 col-form-label">City<span class="star">*</span></label>
-                <input id="city" class="col-sm-6">
+                <div class="col-sm-6">
+                    <input id="city" [ngClass]="{'form-control': true, 'is-invalid': city.invalid && city.touched}" [disabled]="searchForm.currentLocation"
+                           [(ngModel)]="searchForm.city" name="city" #city="ngModel" required>
+                    <div class="invalid-feedback">Please enter a valid city.</div>
+                </div>
             </div>
-            <div class="formRow">
+            <div class="form-group row" style="margin-top: 20px">
                 <label class="col-sm-2 col-form-label"></label>
                 <label class="col-sm-2 col-form-label">State</label>
-                <input id="state" class="col-sm-2">
+                <div class="col-sm-3">
+                    <select id="state" class="form-control" name="state" [disabled]="searchForm.currentLocation">
+                        <option [value]="state" *ngFor="let state of states">{{state}}</option>
+                    </select>
+                </div>
             </div>
-            <div class="line" style="margin: 0">
+            <div class="form-group row">
                 <label class="col-sm-2 col-form-label"></label>
-                <label class="col-sm-8 col-form-label"><hr style="margin: 0"></label>
+                <label class="col-sm-8 col-form-label"><hr></label>
             </div>
-            <div class="formRow" style="margin: 0">
+            <div class="form-group row">
                 <label class="col-sm-2 col-form-label"></label>
                 <label class="col-sm-2 col-form-label">Auto-detect location<span class="star">*</span></label>
-                <span class="col-sm-1"><input type="checkbox" id="current_location">Current location</span>
+                <span class="col-sm-2 col-form-label"><input type="checkbox" id="currentLocation" name="currentLocation" [(ngModel)]="searchForm.currentLocation">Current location</span>
             </div>
-            <div class="formRow">
+            <div class="form-group row" style="margin: 10px 0 20px 0">
                 <label class="col-sm-2 col-form-label"></label>
                 <label class="col-sm-4 col-form-label">
-                    <button type="submit" class="searchButton">
+                    <button type="submit" class="btn btn-primary" style="margin-left: 20px;" [disabled]="!searchForm.currentLocation && checkForm()">
                         <span class="material-icons">search</span><span class="submit">Search</span>
                     </button>
-                    <button type="reset" class="clearButton">
+                    <button id="clear" type="reset" class="btn btn-default" (click)="clearForm()" style="margin-left: 20px;">
                         <span class="material-icons">clear_all</span><span class="clear">Clear</span>
                     </button>
                 </label>

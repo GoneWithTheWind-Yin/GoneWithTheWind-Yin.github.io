@@ -19,38 +19,13 @@
     color: red;
 }
 
-.formRow {
-    margin: 15px 0 10px 0;
-}
-
-.line {
-    margin: 0;
-}
-
-#current_location {
+#currentLocation {
     margin-right: 5px;
 }
 
-.search, .clear {
-    vertical-align: middle;
-}
 
-.searchButton {
-    margin: 0 0 0 15px;
-    border-radius: 5px;
-    border: 0;
-    background-color: #397ef7;
-    color: white;
-    height: 40px;
-    padding: 0 10px 0 10px;
-}
-
-.clearButton {
-    margin: 0 0 0 15px;
-    border-radius: 5px;
-    border: 1px solid;
-    height: 40px;
-    padding: 0 10px 0 10px;
+#clear {
+    border: 1px solid black;
 }
 
 .material-icons {
