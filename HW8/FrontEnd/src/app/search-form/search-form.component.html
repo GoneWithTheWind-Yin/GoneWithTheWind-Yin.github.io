@@ -26,7 +26,7 @@
                 <label class="col-sm-2 col-form-label"></label>
                 <label class="col-sm-2 col-form-label">State</label>
                 <div class="col-sm-3">
-                    <select id="state" class="form-control" name="state" [disabled]="searchForm.currentLocation">
+                    <select id="state" class="form-control" name="state" [disabled]="searchForm.currentLocation" [(ngModel)]="searchForm.state">
                         <option [value]="state" *ngFor="let state of states">{{state}}</option>
                     </select>
                 </div>
@@ -43,11 +43,11 @@
             <div class="form-group row" style="margin: 10px 0 20px 0">
                 <label class="col-sm-2 col-form-label"></label>
                 <label class="col-sm-4 col-form-label">
-                    <button type="submit" class="btn btn-primary" style="margin-left: 20px;" [disabled]="!searchForm.currentLocation && checkForm()">
+                    <button type="submit" class="btn btn-primary" [disabled]="!searchForm.currentLocation && checkForm()">
                         <span class="material-icons">search</span><span class="submit">Search</span>
                     </button>
-                    <button id="clear" type="reset" class="btn btn-default" (click)="clearForm()" style="margin-left: 20px;">
-                        <span class="material-icons">clear_all</span><span class="clear">Clear</span>
+                    <button id="clear" type="reset" class="btn btn-default" (click)="clearForm()" style="margin-left: 10px">
+                        <span class="material-icons" style="transform: rotateY(180deg);">clear_all</span><span class="clear">Clear</span>
                     </button>
                 </label>
             </div>

@@ -1,0 +1,24 @@
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col" class="col-sm-1">#</th>
+            <th scope="col" class="col-sm-3">Date</th>
+            <th scope="col" class="col-sm-2">Status</th>
+            <th scope="col" class="col-sm-2">Temp.High(°F)</th>
+            <th scope="col" class="col-sm-2">Temp.Low(°F)</th>
+            <th scope="col" class="col-sm-2">Wind Speed(mph)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of this.service.dailyWeatherData['data']['timelines'][0]['intervals'] let i = index" (click)="this.service.showDetail(i)">
+            <th scope="row">{{i}}</th>
+            <td class="btn-link">{{this.service.getDate(i)}}</td>
+            <td><img class="img-responsive" src="{{this.service.getImage(i)}}" alt="weather" style="width: 30px; height: 30px; padding-bottom: 4px;">{{this.service.getStatus(i)}}</td>
+            <td>{{this.service.getTempHigh(i)}}</td>
+            <td>{{this.service.getTempLow(i)}}</td>
+            <td>{{this.service.getWindSpeed(i)}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

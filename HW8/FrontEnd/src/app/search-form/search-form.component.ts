@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, Validators} from "@angular/forms";
+import {HttpClient} from "@angular/common/http";
+import {ServiceService} from "../service/service.service";
 
 @Component({
     selector: 'app-search-form',
@@ -8,7 +10,7 @@ import {FormControl, Validators} from "@angular/forms";
 })
 export class SearchFormComponent implements OnInit {
 
-    public states:any = [
+    public states: any = [
         "Select Your State",
         "Alabama",
         "Alaska",
@@ -72,10 +74,10 @@ export class SearchFormComponent implements OnInit {
 
     // @ts-ignore
     checkForm() {
-        if (this.searchForm.street == "" || this.searchForm.street.trim() == "") {
+        if (this.searchForm.street == null || this.searchForm.street == "" || this.searchForm.street.trim() == "") {
             return true;
         }
-        if (this.searchForm.city == "" || this.searchForm.city.trim() == "") {
+        if (this.searchForm.city == null || this.searchForm.city == "" || this.searchForm.city.trim() == "") {
             return true;
         }
         if (this.searchForm.state == "Select Your State") {
@@ -86,10 +88,14 @@ export class SearchFormComponent implements OnInit {
 
     submitForm() {
         console.log(this.searchForm);
+        this.service.loadStatus = true;
         if (this.searchForm.currentLocation) {
-
+            this.service.getWeatherDataByIP("1d");
+            this.service.getWeatherDataByIP("1h");
         } else {
-
+            this.service.getWeatherDataByLoc(this.searchForm.street, this.searchForm.city, this.searchForm.state, "1d");
+            this.service.getWeatherDataByLoc(this.searchForm.street, this.searchForm.city, this.searchForm.state, "1h");
+            // console.log(this.service.dailyWeatherData);
         }
     }
 
@@ -98,11 +104,15 @@ export class SearchFormComponent implements OnInit {
         this.searchForm.city = "";
         this.searchForm.state = "Select Your State";
         this.searchForm.currentLocation = false;
+        this.service.dailyWeatherData = "";
+        this.service.hourlyWeatherData = "";
+        this.service.loadStatus = false;
     }
 
 
-    constructor() {
+    constructor(private http: HttpClient, public service: ServiceService) {
     }
+
 
     ngOnInit(): void {
 

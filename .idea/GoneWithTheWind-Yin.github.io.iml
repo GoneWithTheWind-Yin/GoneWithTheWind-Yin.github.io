@@ -17,5 +17,13 @@
     <orderEntry type="library" name="windbarb" level="application" />
     <orderEntry type="library" name="pattern-fill" level="application" />
     <orderEntry type="library" name="bootstrap" level="application" />
+    <orderEntry type="library" name="highcharts" level="application" />
+    <orderEntry type="library" name="data" level="application" />
+    <orderEntry type="library" name="highcharts-more" level="application" />
+    <orderEntry type="library" name="accessibility" level="application" />
+    <orderEntry type="library" name="export-data" level="application" />
+    <orderEntry type="library" name="exporting" level="application" />
+    <orderEntry type="library" name="heatmap" level="application" />
+    <orderEntry type="library" name="windbarb" level="application" />
   </component>
 </module>

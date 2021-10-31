@@ -1,14 +1,114 @@
-<div class="container">
+<div class="container" style="max-width: 1220px;">
     <div style="text-align: center; margin-top: 20px">
         <button type="button" [ngClass]="resultClass" (click)="getResult()">Results</button>
         <button type="button" [ngClass]="favoriteClass" style="margin-left: 10px" (click)="getFavorite()">Favorites</button>
     </div>
 </div>
-<div class="row" style="margin-top: 60px">
+<div class="row" style="margin-top: 60px" *ngIf="this.service.loadStatus">
     <label class="col-sm-3"></label>
     <div class="col-sm-6">
         <div class="progress">
             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"></div>
         </div>
+    </div>
+</div>
+<div id="results-div" class="container" *ngIf="this.service.isError && !this.service.loadStatus" style="max-width: 1200px; margin-top: 20px;">
+    <div class="alert alert-danger" role="alert">
+        An error occurred please try again later
+    </div>
+</div>
+<!-- && this.service.checkStatus()-->
+<div id="slideContainer">
+    <div class="container" id="searchResult" *ngIf="isResult && this.service.checkStatus() && this.service.detailID == -1" style="margin-top: 60px">
+        <!--    <label class="col-sm-2"></label>-->
+        <div>
+            <h5 style="text-align: center">Forecast at {{this.service.address}}</h5>
+        </div>
+        <div style="text-align: right; margin-top: 40px;">
+            <button class="btn btn-default" (click)="addFavorite()" style="padding: 4px 6px 0 6px; border: 1px solid #aaaeb3;">
+                <span class="material-icons" *ngIf="!isFavorite">star_border</span>
+                <span class="material-icons" style="color:#fdd94b;" *ngIf="isFavorite">star</span>
+            </button>
+            <button class="btn btn-default" style="padding-top: 4px; color: #aaaeb3; vertical-align: middle;">
+                <span>Detail ></span>
+            </button>
+        </div>
+        <nav style="margin-top: 20px;">
+            <div class="nav nav-tabs justify-content-end" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link" [class.active]="'nav-day-tab' == activeID" id="nav-day-tab" data-toggle="tab"
+                   href="#" role="tab" aria-controls="nav-day" (click)="setActive('nav-day-tab')">Day View</a>
+                <a class="nav-item nav-link" [class.active]="'nav-temp-tab' == activeID" id="nav-temp-tab" data-toggle="tab"
+                   href="#" role="tab" aria-controls="nav-temp" (click)="setActive('nav-temp-tab')">Daily Temp. Chart</a>
+                <a class="nav-item nav-link" [class.active]="'nav-meteogram-tab' == activeID" id="nav-meteogram-tab" data-toggle="tab"
+                   href="#" role="tab" aria-controls="nav-meteogram" (click)="setActive('nav-meteogram-tab')">Meteogram</a>
+            </div>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane active" *ngIf="activeID==='nav-day-tab'" role="tabpanel" aria-labelledby="nav-day">
+                    <app-weather-chart></app-weather-chart>
+                </div>
+                <div class="tab-pane active" *ngIf="activeID==='nav-temp-tab'" role="tabpanel" aria-labelledby="nav-temp">
+                    <app-temp-chart></app-temp-chart>
+                </div>
+                <div class="tab-pane active" *ngIf="activeID==='nav-meteogram-tab'" role="tabpanel" aria-labelledby="nav-meteogram">
+                    <app-meteogram-chart></app-meteogram-chart>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="container" id="searchDetail" style="max-width: 1220px;" *ngIf="this.service.detailID != -1">
+        <div class="row">
+            <label class="col-sm-1" style="margin-top: 12px"><button class="btn btn-default" style="border: 1px solid #aaaeb3;" (click)="this.service.returnList()">List</button></label>
+<!--            {{this.service.getDate(0)}}-->
+            <h4 style="text-align: center; margin-top: 12px" class="col-sm-10">{{this.service.getDate(this.service.detailID)}}</h4>
+            <button class="btn justify-content-end col-sm-1">
+                <img id="twitter" src="../../assets/images/twitter.png" alt="twitter" style="float: right;">
+            </button>
+        </div>
+        <table class="table table-striped">
+            <tbody>
+            <tr>
+                <th scope="row" class="col-sm-4">Status</th>
+                <td>{{this.service.getStatus(this.service.detailID)}}</td>
+            </tr>
+            <tr>
+                <th scope="row" class="col-sm-4">Max Temperature</th>
+                <td>{{this.service.getTempHigh(this.service.detailID)}}°F</td>
+            </tr>
+            <tr>
+                <th scope="row" class="col-sm-4">Min Temperature</th>
+                <td>{{this.service.getTempLow(this.service.detailID)}}°F</td>
+            </tr>
+            <tr>
+                <th scope="row" class="col-sm-4">Apparent Temperature</th>
+                <td>{{this.service.getTemp(this.service.detailID)}}°F</td>
+            </tr>
+            <tr>
+                <th scope="row" class="col-sm-4">Sun Rise Time</th>
+                <td>{{this.service.getSunriseTime(this.service.detailID)}}</td>
+            </tr>
+            <tr>
+                <th scope="row" class="col-sm-4">Sun Set Time</th>
+                <td>{{this.service.getSunsetTime(this.service.detailID)}}</td>
+            </tr>
+            <tr>
+                <th scope="row" class="col-sm-4">Humidity</th>
+                <td>{{this.service.getHumidity(this.service.detailID)}}%</td>
+            </tr>
+            <tr>
+                <th scope="row" class="col-sm-4">Wind Speed</th>
+                <td>{{this.service.getWindSpeed(this.service.detailID)}}mph</td>
+            </tr>
+            <tr>
+                <th scope="row" class="col-sm-4">Visibility</th>
+                <td>{{this.service.getVisibility(this.service.detailID)}}mi</td>
+            </tr>
+            <tr>
+                <th scope="row" class="col-sm-4">Cloud Cover</th>
+                <td>{{this.service.getCloudCover(this.service.detailID)}}%</td>
+            </tr>
+            </tbody>
+        </table>
+        <div id="map"></div>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDInz2_kjtD__RQh6w_RxTmi7-8jG0S6ww" async defer></script>
     </div>
 </div>

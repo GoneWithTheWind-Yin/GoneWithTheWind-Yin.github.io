@@ -28,6 +28,6 @@
     border: 1px solid black;
 }
 
-.material-icons {
+.material-icons, .clear, .submit{
     vertical-align: middle;
 }
