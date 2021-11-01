@@ -1,7 +1,5 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable, Output} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-// @ts-ignore
-import { } from '@types/googlemaps';
 
 declare var google: any;
 
@@ -15,11 +13,16 @@ export class ServiceService {
     public dailyWeatherData: any = "";
     public hourlyWeatherData: any = "";
     public isError: any = false;
-    public detailID: any = -1;
+    public detailID: any = 0;
+    public isDetail: any = false;
     public lat: any = 30;
     public lng: any = 110;
     public map: any;
     public marker: any;
+    public city: any;
+    public state: any;
+
+    @Output() slide = new EventEmitter<string>();
 
     public getWeatherDataByIP(period: any) {
         var ipInfoUrl = "https://ipinfo.io/?token=0b676f0b07b1a9"
@@ -28,6 +31,10 @@ export class ServiceService {
             console.log(data["loc"]);
             // @ts-ignore
             this.address = data["city"] + ", " + data["region"];
+            // @ts-ignore
+            this.city = data["city"];
+            // @ts-ignore
+            this.state = data["region"]
             // @ts-ignore
             var arr = data["loc"].split(',');
             this.lat = arr[0];
@@ -51,13 +58,15 @@ export class ServiceService {
                 this.lng = data["results"][0]["geometry"]["location"]["lng"];
                 var location = this.lat + "," + this.lng;
                 this.address = city + ", " + state;
+                this.city = city;
+                this.state = state;
                 this.getWeatherData(location, period);
             }
         });
     }
 
     public getWeatherData(loc: any, period: any) {
-        var URL = "http://127.0.0.1:8080/search?" + "location=" + loc + "&timesteps=" + period;
+        var URL = "http://weathersearch-1998.wl.r.appspot.com/search?" + "location=" + loc + "&timesteps=" + period;
         this.http.get(URL).subscribe(data => {
             if (period == "1d") {
                 this.dailyWeatherData = data;
@@ -67,39 +76,42 @@ export class ServiceService {
         });
     }
 
-    // @ts-ignore
     checkStatus() {
         if (this.dailyWeatherData === "" || this.hourlyWeatherData === "") {
             return false;
         }
-        this.loadStatus = false;
-        if (this.dailyWeatherData["data"] == undefined || this.hourlyWeatherData == undefined) {
+        if (this.dailyWeatherData["data"] == undefined || this.hourlyWeatherData["data"] == undefined) {
+            this.loadStatus = false;
             this.isError = true;
             return false;
         }
+        this.loadStatus = false;
         return true;
     }
 
     showDetail(i: any) {
         this.detailID = i;
-        // this.initMap();
+        this.isDetail = true;
+        this.slide.emit("right");
+        this.initMap();
     }
 
-    // initMap():void {
-    //     let uluru = {lat: this.lat, lng: this.lng};
-    //     this.map = new google.maps.Map(
-    //         document.getElementById("map") as HTMLElement,
-    //         {
-    //             zoom: 4,
-    //             center: uluru,
-    //         }
-    //     );
-    //     this.marker = new google.maps.Marker({
-    //         position: uluru,
-    //         map: this.map,
-    //     });
-    //     this.marker.setMap(this.map);
-    // }
+    initMap(): void {
+        // @ts-ignore
+        let uluru = {lat: parseFloat(this.lat), lng: parseFloat(this.lng)};
+        this.map = new google.maps.Map(
+            document.getElementById("map") as HTMLElement,
+            {
+                zoom: 16,
+                center: uluru,
+            }
+        );
+        this.marker = new google.maps.Marker({
+            position: uluru,
+            map: this.map,
+        });
+        // this.marker.setMap(this.map);
+    }
 
     weatherDict: any = {
         1000: "clear_day.svg",
@@ -222,9 +234,112 @@ export class ServiceService {
     }
 
     returnList() {
-        this.detailID = -1;
+        this.detailID = 0;
+        this.isDetail = false;
+        this.slide.emit("container");
     }
 
-    constructor(private http: HttpClient) {
+    // favoriteList: any = [];
+    favoriteMap = new Map();
+
+    checkFavorite() {
+        return this.favoriteMap.get(this.address) != undefined;
+        // return this.favoriteList.count({"city": this.city, "state": this.state})
+    }
+
+    appendFavorite() {
+        // this.favoriteList.push({"city": this.city, "state": this.state});
+        if (this.favoriteMap.get(this.address) != undefined) {
+            this.removeFavorite(this.address);
+            return;
+        }
+        this.favoriteMap.set(this.address, {"city": this.city, "state": this.state});
+    }
+
+    removeFavorite(key: any) {
+        this.favoriteMap.delete(key);
+    }
+
+    searchWeather(key: any) {
+        this.clearForm();
+        this.searchForm.city = this.favoriteMap.get(key).city;
+        this.searchForm.state = this.favoriteMap.get(key).state;
+        this.getResult();
+        this.submitForm();
+    }
+
+    public searchForm: any = {
+        street: "",
+        city: "",
+        state: "Select Your State",
+        currentLocation: false,
+    }
+
+    checkForm() {
+        if (this.searchForm.street == null || this.searchForm.street == "" || this.searchForm.street.trim() == "") {
+            return true;
+        }
+        if (this.searchForm.city == null || this.searchForm.city == "" || this.searchForm.city.trim() == "") {
+            return true;
+        }
+        if (this.searchForm.state == "Select Your State") {
+            return true;
+        }
+        return false;
+    }
+
+    submitForm() {
+        console.log(this.searchForm);
+        this.loadStatus = true;
+        if (this.searchForm.currentLocation) {
+            this.getWeatherDataByIP("1d");
+            this.getWeatherDataByIP("1h");
+        } else {
+            this.getWeatherDataByLoc(this.searchForm.street, this.searchForm.city, this.searchForm.state, "1d");
+            this.getWeatherDataByLoc(this.searchForm.street, this.searchForm.city, this.searchForm.state, "1h");
+            // console.log(this.service.dailyWeatherData);
+        }
+    }
+
+    clearForm() {
+        this.searchForm.street = "";
+        this.searchForm.city = "";
+        this.searchForm.state = "Select Your State";
+        this.searchForm.currentLocation = false;
+        this.dailyWeatherData = "";
+        this.hourlyWeatherData = "";
+        this.loadStatus = false;
+        this.getResult();
+    }
+
+    resultClass = "btn btn-primary";
+    favoriteClass = "btn btn-default";
+    isResult = true;
+    isFavorite = false;
+
+    getResult() {
+        this.resultClass = "btn btn-primary";
+        this.favoriteClass = "btn btn-default";
+        this.isResult = true;
+        this.isFavorite = false;
+    }
+
+    getFavorite() {
+        this.resultClass = "btn btn-default";
+        this.favoriteClass = "btn btn-primary";
+        this.isResult = false;
+        this.isFavorite = true;
+    }
+
+    postTwitter() {
+        var text = "The temperature in " + this.city + ", " + this.state + " on " + this.getDate(this.detailID) + " is "
+            + this.getTemp(this.detailID) + "°F. The weather conditions are " + this.getStatus(this.detailID) + "&hashtags=CSCI571WeatherSearch";
+        var url = "https://twitter.com/intent/tweet?text=" + text;
+        console.log(url);
+        var newWin = window.open(url, "_blank");
+    }
+
+    constructor(private http: HttpClient
+    ) {
     }
 }

@@ -65,52 +65,26 @@ export class SearchFormComponent implements OnInit {
         "Wyoming"
     ];
 
-    public searchForm: any = {
-        street: "",
-        city: "",
-        state: "Select Your State",
-        currentLocation: false,
-    }
-
-    // @ts-ignore
-    checkForm() {
-        if (this.searchForm.street == null || this.searchForm.street == "" || this.searchForm.street.trim() == "") {
-            return true;
-        }
-        if (this.searchForm.city == null || this.searchForm.city == "" || this.searchForm.city.trim() == "") {
-            return true;
-        }
-        if (this.searchForm.state == "Select Your State") {
-            return true;
-        }
-        return false;
-    }
-
-    submitForm() {
-        console.log(this.searchForm);
-        this.service.loadStatus = true;
-        if (this.searchForm.currentLocation) {
-            this.service.getWeatherDataByIP("1d");
-            this.service.getWeatherDataByIP("1h");
-        } else {
-            this.service.getWeatherDataByLoc(this.searchForm.street, this.searchForm.city, this.searchForm.state, "1d");
-            this.service.getWeatherDataByLoc(this.searchForm.street, this.searchForm.city, this.searchForm.state, "1h");
-            // console.log(this.service.dailyWeatherData);
-        }
-    }
-
-    clearForm() {
-        this.searchForm.street = "";
-        this.searchForm.city = "";
-        this.searchForm.state = "Select Your State";
-        this.searchForm.currentLocation = false;
-        this.service.dailyWeatherData = "";
-        this.service.hourlyWeatherData = "";
-        this.service.loadStatus = false;
-    }
-
 
     constructor(private http: HttpClient, public service: ServiceService) {
+    }
+
+    public options: any;
+
+    getAutoComplete(event: any) {
+        this.options = [];
+        var city = this.service.searchForm.city.trim();
+        var url = "http://weathersearch-1998.wl.r.appspot.com/autocomplete?city=" + this.service.searchForm.city;
+        if (this.service.searchForm.city != "" && city.length != 0) {// check all blank
+            this.http.get(url).subscribe(data => {
+                // @ts-ignore
+                var arr = data["predictions"];
+                for (let i = 0; i < arr.length; ++i) {
+                    let ac = arr[i]["structured_formatting"]["main_text"];
+                    this.options.push(ac);
+                }
+            });
+        }
     }
 
 

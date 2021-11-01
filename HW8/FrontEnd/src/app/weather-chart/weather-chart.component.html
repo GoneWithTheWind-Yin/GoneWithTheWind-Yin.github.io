@@ -11,7 +11,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let data of this.service.dailyWeatherData['data']['timelines'][0]['intervals'] let i = index" (click)="this.service.showDetail(i)">
+        <tr *ngFor="let i of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]" (click)="this.service.showDetail(i)">
             <th scope="row">{{i}}</th>
             <td class="btn-link">{{this.service.getDate(i)}}</td>
             <td><img class="img-responsive" src="{{this.service.getImage(i)}}" alt="weather" style="width: 30px; height: 30px; padding-bottom: 4px;">{{this.service.getStatus(i)}}</td>

@@ -1,15 +1,16 @@
 <div id="formContainer" class="container">
-    <form id="searchForm" (ngSubmit)="submitForm()">
+    <form id="searchForm" (ngSubmit)="this.service.submitForm()">
         <div id="title">
             <h3>Weather Search🌤</h3>
         </div>
         <div class="addressForm">
             <div class="form-group row" style="margin-top: 20px">
-                <label class="col-sm-2 col-form-label"></label>
+                <label class="col-sm-2"></label>
                 <label class="col-sm-2 col-form-label">Street<span class="star">*</span></label>
                 <div class="col-sm-6">
-                    <input id="street" [ngClass]="{'form-control': true, 'is-invalid': street.invalid && street.touched}" [disabled]="searchForm.currentLocation"
-                           [(ngModel)]="searchForm.street" name="street" #street="ngModel" required>
+                    <input id="street" name="street" type="text" [ngClass]="{'form-control': true, 'is-invalid': street.invalid && (street.dirty || street.touched)}"
+                           [disabled]="this.service.searchForm.currentLocation" #street="ngModel"
+                           required noWhitespace [(ngModel)]="this.service.searchForm.street">
                     <div class="invalid-feedback">Please enter a valid street.</div>
                 </div>
             </div>
@@ -17,8 +18,13 @@
                 <label class="col-sm-2 col-form-label"></label>
                 <label class="col-sm-2 col-form-label">City<span class="star">*</span></label>
                 <div class="col-sm-6">
-                    <input id="city" [ngClass]="{'form-control': true, 'is-invalid': city.invalid && city.touched}" [disabled]="searchForm.currentLocation"
-                           [(ngModel)]="searchForm.city" name="city" #city="ngModel" required>
+                    <input id="city" type="text" [ngClass]="{'form-control': true, 'is-invalid': city.invalid && (city.dirty || city.touched)}"
+                           [disabled]="this.service.searchForm.currentLocation"
+                           [(ngModel)]="this.service.searchForm.city" name="city" #city="ngModel" required noWhitespace
+                           matInput [matAutocomplete]="auto" (keyup)="getAutoComplete($event)">
+                    <mat-autocomplete #auto ="matAutocomplete">
+                        <mat-option *ngFor="let option of options" [value]="option">{{option}}</mat-option>
+                    </mat-autocomplete>
                     <div class="invalid-feedback">Please enter a valid city.</div>
                 </div>
             </div>
@@ -26,7 +32,8 @@
                 <label class="col-sm-2 col-form-label"></label>
                 <label class="col-sm-2 col-form-label">State</label>
                 <div class="col-sm-3">
-                    <select id="state" class="form-control" name="state" [disabled]="searchForm.currentLocation" [(ngModel)]="searchForm.state">
+                    <select id="state" class="form-control" name="state" [disabled]="this.service.searchForm.currentLocation"
+                            [(ngModel)]="this.service.searchForm.state">
                         <option [value]="state" *ngFor="let state of states">{{state}}</option>
                     </select>
                 </div>
@@ -38,15 +45,16 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label"></label>
                 <label class="col-sm-2 col-form-label">Auto-detect location<span class="star">*</span></label>
-                <span class="col-sm-2 col-form-label"><input type="checkbox" id="currentLocation" name="currentLocation" [(ngModel)]="searchForm.currentLocation">Current location</span>
+                <span class="col-sm-2 col-form-label"><input type="checkbox" id="currentLocation" name="currentLocation"
+                                                             [(ngModel)]="this.service.searchForm.currentLocation">Current location</span>
             </div>
             <div class="form-group row" style="margin: 10px 0 20px 0">
                 <label class="col-sm-2 col-form-label"></label>
                 <label class="col-sm-4 col-form-label">
-                    <button type="submit" class="btn btn-primary" [disabled]="!searchForm.currentLocation && checkForm()">
+                    <button type="submit" class="btn btn-primary" [disabled]="!this.service.searchForm.currentLocation && this.service.checkForm()">
                         <span class="material-icons">search</span><span class="submit">Search</span>
                     </button>
-                    <button id="clear" type="reset" class="btn btn-default" (click)="clearForm()" style="margin-left: 10px">
+                    <button id="clear" type="reset" class="btn btn-default" (click)="this.service.clearForm()" style="margin-left: 10px">
                         <span class="material-icons" style="transform: rotateY(180deg);">clear_all</span><span class="clear">Clear</span>
                     </button>
                 </label>

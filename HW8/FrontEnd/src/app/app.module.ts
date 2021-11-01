@@ -14,6 +14,9 @@ import {TempChartComponent} from './temp-chart/temp-chart.component';
 import {MeteogramChartComponent} from './meteogram-chart/meteogram-chart.component';
 import {HighchartsChartModule} from 'highcharts-angular';
 import {ChartModule} from 'angular-highcharts';
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatOptionModule} from "@angular/material/core";
+import {MatInputModule} from "@angular/material/input";
 
 
 @NgModule({
@@ -34,6 +37,9 @@ import {ChartModule} from 'angular-highcharts';
         HttpClientModule,
         HighchartsChartModule,
         ChartModule,
+        MatAutocompleteModule,
+        MatOptionModule,
+        MatInputModule,
     ],
     providers: [ServiceService],
     bootstrap: [AppComponent]

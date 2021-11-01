@@ -1,7 +1,7 @@
 <div class="container" style="max-width: 1220px;">
     <div style="text-align: center; margin-top: 20px">
-        <button type="button" [ngClass]="resultClass" (click)="getResult()">Results</button>
-        <button type="button" [ngClass]="favoriteClass" style="margin-left: 10px" (click)="getFavorite()">Favorites</button>
+        <button type="button" [ngClass]="this.service.resultClass" (click)="this.service.getResult()">Results</button>
+        <button type="button" [ngClass]="this.service.favoriteClass" style="margin-left: 10px" (click)="this.service.getFavorite()">Favorites</button>
     </div>
 </div>
 <div class="row" style="margin-top: 60px" *ngIf="this.service.loadStatus">
@@ -18,18 +18,18 @@
     </div>
 </div>
 <!-- && this.service.checkStatus()-->
-<div id="slideContainer">
-    <div class="container" id="searchResult" *ngIf="isResult && this.service.checkStatus() && this.service.detailID == -1" style="margin-top: 60px">
+<div id="slideContainer" *ngIf="this.service.isResult && this.service.checkStatus()">
+    <div class="container" id="searchResult" [hidden]="this.service.isDetail" style="margin-top: 60px">
         <!--    <label class="col-sm-2"></label>-->
         <div>
             <h5 style="text-align: center">Forecast at {{this.service.address}}</h5>
         </div>
         <div style="text-align: right; margin-top: 40px;">
             <button class="btn btn-default" (click)="addFavorite()" style="padding: 4px 6px 0 6px; border: 1px solid #aaaeb3;">
-                <span class="material-icons" *ngIf="!isFavorite">star_border</span>
-                <span class="material-icons" style="color:#fdd94b;" *ngIf="isFavorite">star</span>
+                <span class="material-icons" *ngIf="!this.service.checkFavorite()">star_border</span>
+                <span class="material-icons" style="color:#fdd94b;" *ngIf="this.service.checkFavorite()">star</span>
             </button>
-            <button class="btn btn-default" style="padding-top: 4px; color: #aaaeb3; vertical-align: middle;">
+            <button class="btn btn-default" style="padding-top: 4px; color: #aaaeb3; vertical-align: middle;" (click)="this.service.showDetail(0)">
                 <span>Detail ></span>
             </button>
         </div>
@@ -55,14 +55,16 @@
             </div>
         </nav>
     </div>
-    <div class="container" id="searchDetail" style="max-width: 1220px;" *ngIf="this.service.detailID != -1">
+    <div class="container" id="searchDetail" style="max-width: 1220px;" [hidden]="!this.service.isDetail">
         <div class="row">
             <label class="col-sm-1" style="margin-top: 12px"><button class="btn btn-default" style="border: 1px solid #aaaeb3;" (click)="this.service.returnList()">List</button></label>
 <!--            {{this.service.getDate(0)}}-->
             <h4 style="text-align: center; margin-top: 12px" class="col-sm-10">{{this.service.getDate(this.service.detailID)}}</h4>
-            <button class="btn justify-content-end col-sm-1">
-                <img id="twitter" src="../../assets/images/twitter.png" alt="twitter" style="float: right;">
-            </button>
+            <div class="col-sm-1 justify-content-end" >
+                <button class="btn justify-content-end" (click)="this.service.postTwitter()" style="float: right; padding:0; margin-bottom: 12px;">
+                    <img id="twitter" src="../../assets/images/twitter.png" alt="twitter" style="float: right;">
+                </button>
+            </div>
         </div>
         <table class="table table-striped">
             <tbody>
@@ -109,6 +111,31 @@
             </tbody>
         </table>
         <div id="map"></div>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDInz2_kjtD__RQh6w_RxTmi7-8jG0S6ww" async defer></script>
+    </div>
+</div>
+
+<div class="container" style="max-width: 1220px; margin-top: 20px;" *ngIf="this.service.isFavorite">
+    <div class="alert alert-warning" role="alert" *ngIf="this.service.favoriteMap.size == 0">
+        <strong>Sorry!</strong> No records found.
+    </div>
+    <div class="table-responsive" *ngIf="this.service.favoriteMap.size > 0">
+        <table class="table table-hover" *ngIf="this.service.favoriteMap.size > 0">
+            <thead>
+            <tr>
+                <th scope="col" class="col-sm-1">#</th>
+                <th scope="col" class="col-sm-4">City</th>
+                <th scope="col" class="col-sm-4">State</th>
+                <th scope="col" class="col-sm-3"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let key of this.service.favoriteMap.keys() let i = index">
+                <th scope="row">{{i + 1}}</th>
+                <td class="btn-link" (click)="this.service.searchWeather(key)">{{this.service.favoriteMap.get(key).city}}</td>
+                <td class="btn-link" (click)="this.service.searchWeather(key)">{{this.service.favoriteMap.get(key).state}}</td>
+                <td><span class="material-icons" (click)="service.removeFavorite(key)">delete</span></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
