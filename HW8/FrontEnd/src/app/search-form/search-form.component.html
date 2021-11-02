@@ -10,7 +10,7 @@
                 <div class="col-sm-6">
                     <input id="street" name="street" type="text" [ngClass]="{'form-control': true, 'is-invalid': street.invalid && (street.dirty || street.touched)}"
                            [disabled]="this.service.searchForm.currentLocation" #street="ngModel"
-                           required noWhitespace [(ngModel)]="this.service.searchForm.street">
+                           required appNowhitespace [(ngModel)]="this.service.searchForm.street">
                     <div class="invalid-feedback">Please enter a valid street.</div>
                 </div>
             </div>
@@ -20,10 +20,10 @@
                 <div class="col-sm-6">
                     <input id="city" type="text" [ngClass]="{'form-control': true, 'is-invalid': city.invalid && (city.dirty || city.touched)}"
                            [disabled]="this.service.searchForm.currentLocation"
-                           [(ngModel)]="this.service.searchForm.city" name="city" #city="ngModel" required noWhitespace
+                           [(ngModel)]="this.service.searchForm.city" name="city" #city="ngModel" required appNowhitespace
                            matInput [matAutocomplete]="auto" (keyup)="getAutoComplete($event)">
                     <mat-autocomplete #auto ="matAutocomplete">
-                        <mat-option *ngFor="let option of options" [value]="option">{{option}}</mat-option>
+                        <mat-option *ngFor="let option of options let i = index" [value]="option" (onSelectionChange)="this.service.updateForm(this.optionsStates[i])">{{option}}</mat-option>
                     </mat-autocomplete>
                     <div class="invalid-feedback">Please enter a valid city.</div>
                 </div>

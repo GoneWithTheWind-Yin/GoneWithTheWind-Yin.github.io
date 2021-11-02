@@ -56,13 +56,14 @@
         </nav>
     </div>
     <div class="container" id="searchDetail" style="max-width: 1220px;" [hidden]="!this.service.isDetail">
-        <div class="row">
-            <label class="col-sm-1" style="margin-top: 12px"><button class="btn btn-default" style="border: 1px solid #aaaeb3;" (click)="this.service.returnList()">List</button></label>
+        <div class="row" style="margin-bottom: 20px; margin-top:15px;">
+            <label class="col-sm-1"><button class="btn btn-default" style="border: 1px solid #aaaeb3;" (click)="this.service.returnList()">
+                <span style="font-size: 20px;"><</span>List</button></label>
 <!--            {{this.service.getDate(0)}}-->
-            <h4 style="text-align: center; margin-top: 12px" class="col-sm-10">{{this.service.getDate(this.service.detailID)}}</h4>
+            <h4 style="text-align: center;" class="col-sm-10">{{this.service.getDate(this.service.detailID)}}</h4>
             <div class="col-sm-1 justify-content-end" >
-                <button class="btn justify-content-end" (click)="this.service.postTwitter()" style="float: right; padding:0; margin-bottom: 12px;">
-                    <img id="twitter" src="../../assets/images/twitter.png" alt="twitter" style="float: right;">
+                <button class="btn justify-content-end" (click)="this.service.postTwitter()" style="float: right; padding:0;">
+                    <img id="twitter" src="../../assets/images/twitter.png" alt="twitter" style="float: right;" height="38" width="38">
                 </button>
             </div>
         </div>

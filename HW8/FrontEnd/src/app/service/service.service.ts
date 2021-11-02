@@ -1,11 +1,13 @@
-import {EventEmitter, Injectable, Output} from '@angular/core';
+import {ChangeDetectorRef, EventEmitter, Injectable, Output} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {animate, state, style, transition, trigger} from "@angular/animations";
 
 declare var google: any;
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
+
 export class ServiceService {
 
     public loadStatus: any = false;
@@ -15,6 +17,7 @@ export class ServiceService {
     public isError: any = false;
     public detailID: any = 0;
     public isDetail: any = false;
+    public active: any;
     public lat: any = 30;
     public lng: any = 110;
     public map: any;
@@ -22,7 +25,7 @@ export class ServiceService {
     public city: any;
     public state: any;
 
-    @Output() slide = new EventEmitter<string>();
+    // @Output() slide = new EventEmitter<string>();
 
     public getWeatherDataByIP(period: any) {
         var ipInfoUrl = "https://ipinfo.io/?token=0b676f0b07b1a9"
@@ -92,8 +95,14 @@ export class ServiceService {
     showDetail(i: any) {
         this.detailID = i;
         this.isDetail = true;
-        this.slide.emit("right");
+        // this.slide.emit("right");
         this.initMap();
+    }
+
+    returnList() {
+        this.detailID = 0;
+        this.isDetail = false;
+        // this.slide.emit("left");
     }
 
     initMap(): void {
@@ -170,6 +179,60 @@ export class ServiceService {
         3002: "Strong Wind",
     }
 
+    stateDict: any = {
+        "AL": "Alabama",
+        "AK": "Alaska",
+        "AZ": "Arizona",
+        "AR": "Arkansas",
+        "CA": "California",
+        "CO": "Colorado",
+        "CT": "Connecticut",
+        "DE": "Delaware",
+        "DC": "District Of Columbia",
+        "FL": "Florida",
+        "GA": "Georgia",
+        "HI": "Hawaii",
+        "ID": "Idaho",
+        "IL": "Illinois",
+        "IN": "Indiana",
+        "IA": "Iowa",
+        "KS": "Kansas",
+        "KY": "Kentucky",
+        "LA": "Louisiana",
+        "ME": "Maine",
+        "MD": "Maryland",
+        "MA": "Massachusetts",
+        "MI": "Michigan",
+        "MN": "Minnesota",
+        "MS": "Mississippi",
+        "MO": "Missouri",
+        "MT": "Montana",
+        "NE": "Nebraska",
+        "NV": "Nevada",
+        "NH": "New Hampshire",
+        "NJ": "New Jersey",
+        "NM": "New Mexico",
+        "NY": "New York",
+        "NC": "North Carolina",
+        "ND": "North Dakota",
+        "OH": "Ohio",
+        "OK": "Oklahoma",
+        "OR": "Oregon",
+        "PA": "Pennsylvania",
+        "RI": "Rhode Island",
+        "SC": "South Carolina",
+        "SD": "South Dakota",
+        "TN": "Tennessee",
+        "TX": "Texas",
+        "UT": "Utah",
+        "VT": "Vermont",
+        "VA": "Virginia",
+        "WA": "Washington",
+        "WV": "West Virginia",
+        "WI": "Wisconsin",
+        "WY": "Wyoming"
+    }
+
     weekDict: any = {
         "Sun": "Sunday",
         "Mon": "Monday",
@@ -231,12 +294,6 @@ export class ServiceService {
 
     getWindSpeed(i: any) {
         return this.dailyWeatherData['data']['timelines'][0]['intervals'][i]["values"]["windSpeed"];
-    }
-
-    returnList() {
-        this.detailID = 0;
-        this.isDetail = false;
-        this.slide.emit("container");
     }
 
     // favoriteList: any = [];
@@ -339,7 +396,12 @@ export class ServiceService {
         var newWin = window.open(url, "_blank");
     }
 
-    constructor(private http: HttpClient
-    ) {
+    updateForm(str: any) {
+        setTimeout(() => {
+            this.searchForm.state = this.stateDict[str];
+        });
+    }
+
+    constructor(private http: HttpClient) {
     }
 }

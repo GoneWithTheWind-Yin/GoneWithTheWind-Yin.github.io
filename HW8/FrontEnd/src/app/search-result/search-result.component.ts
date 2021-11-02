@@ -1,14 +1,16 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ServiceService} from "../service/service.service";
-
-declare var google: any;
+import {animate, style, transition, trigger} from "@angular/animations";
 
 @Component({
     selector: 'app-search-result',
     templateUrl: './search-result.component.html',
-    styleUrls: ['./search-result.component.css']
+    styleUrls: ['./search-result.component.css'],
 })
+
 export class SearchResultComponent implements OnInit {
+
+    @Output() slide = new EventEmitter<string>();
 
     constructor(public service: ServiceService) {
     }

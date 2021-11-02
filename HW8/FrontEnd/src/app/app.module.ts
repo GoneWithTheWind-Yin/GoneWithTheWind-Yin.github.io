@@ -15,9 +15,8 @@ import {MeteogramChartComponent} from './meteogram-chart/meteogram-chart.compone
 import {HighchartsChartModule} from 'highcharts-angular';
 import {ChartModule} from 'angular-highcharts';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
-import {MatOptionModule} from "@angular/material/core";
+import {NowhitespaceDirective} from './directives/nowhitespace.directive';
 import {MatInputModule} from "@angular/material/input";
-
 
 @NgModule({
     declarations: [
@@ -27,6 +26,7 @@ import {MatInputModule} from "@angular/material/input";
         WeatherChartComponent,
         TempChartComponent,
         MeteogramChartComponent,
+        NowhitespaceDirective,
     ],
     imports: [
         BrowserModule,
@@ -38,7 +38,6 @@ import {MatInputModule} from "@angular/material/input";
         HighchartsChartModule,
         ChartModule,
         MatAutocompleteModule,
-        MatOptionModule,
         MatInputModule,
     ],
     providers: [ServiceService],

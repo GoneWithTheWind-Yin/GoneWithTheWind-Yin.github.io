@@ -10,6 +10,7 @@ import {ServiceService} from "../service/service.service";
 })
 export class SearchFormComponent implements OnInit {
 
+
     public states: any = [
         "Select Your State",
         "Alabama",
@@ -70,21 +71,27 @@ export class SearchFormComponent implements OnInit {
     }
 
     public options: any;
+    public optionsStates: any;
 
     getAutoComplete(event: any) {
-        this.options = [];
-        var city = this.service.searchForm.city.trim();
-        var url = "http://weathersearch-1998.wl.r.appspot.com/autocomplete?city=" + this.service.searchForm.city;
-        if (this.service.searchForm.city != "" && city.length != 0) {// check all blank
-            this.http.get(url).subscribe(data => {
-                // @ts-ignore
-                var arr = data["predictions"];
-                for (let i = 0; i < arr.length; ++i) {
-                    let ac = arr[i]["structured_formatting"]["main_text"];
-                    this.options.push(ac);
-                }
-            });
-        }
+        setTimeout( () => {
+            this.options = [];
+            this.optionsStates = [];
+            var city = this.service.searchForm.city.trim();
+            var url = "http://weathersearch-1998.wl.r.appspot.com/autocomplete?city=" + this.service.searchForm.city;
+            if (this.service.searchForm.city != "" && city.length != 0) {// check all blank
+                this.http.get(url).subscribe(data => {
+                    // @ts-ignore
+                    var arr = data["predictions"];
+                    for (let i = 0; i < arr.length; ++i) {
+                        let ac = arr[i]["structured_formatting"]["main_text"];
+                        let state = arr[i]["terms"][1]["value"];
+                        this.options.push(ac);
+                        this.optionsStates.push(state);
+                    }
+                });
+            }
+        });
     }
 
 
