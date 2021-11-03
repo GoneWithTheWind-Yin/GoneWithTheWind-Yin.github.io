@@ -18,101 +18,103 @@
     </div>
 </div>
 <!-- && this.service.checkStatus()-->
-<div id="slideContainer" *ngIf="this.service.isResult && this.service.checkStatus()">
-    <div class="container" id="searchResult" [hidden]="this.service.isDetail" style="margin-top: 60px">
-        <!--    <label class="col-sm-2"></label>-->
-        <div>
-            <h5 style="text-align: center">Forecast at {{this.service.address}}</h5>
-        </div>
-        <div style="text-align: right; margin-top: 40px;">
-            <button class="btn btn-default" (click)="addFavorite()" style="padding: 4px 6px 0 6px; border: 1px solid #aaaeb3;">
-                <span class="material-icons" *ngIf="!this.service.checkFavorite()">star_border</span>
-                <span class="material-icons" style="color:#fdd94b;" *ngIf="this.service.checkFavorite()">star</span>
-            </button>
-            <button class="btn btn-default" style="padding-top: 4px; color: #aaaeb3; vertical-align: middle;" (click)="this.service.showDetail(0)">
-                <span>Detail ></span>
-            </button>
-        </div>
-        <nav style="margin-top: 20px;">
-            <div class="nav nav-tabs justify-content-end" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link" [class.active]="'nav-day-tab' == activeID" id="nav-day-tab" data-toggle="tab"
-                   href="#" role="tab" aria-controls="nav-day" (click)="setActive('nav-day-tab')">Day View</a>
-                <a class="nav-item nav-link" [class.active]="'nav-temp-tab' == activeID" id="nav-temp-tab" data-toggle="tab"
-                   href="#" role="tab" aria-controls="nav-temp" (click)="setActive('nav-temp-tab')">Daily Temp. Chart</a>
-                <a class="nav-item nav-link" [class.active]="'nav-meteogram-tab' == activeID" id="nav-meteogram-tab" data-toggle="tab"
-                   href="#" role="tab" aria-controls="nav-meteogram" (click)="setActive('nav-meteogram-tab')">Meteogram</a>
+<div id="slideContainer" *ngIf="this.service.isResult && this.service.checkStatus()" [@animSlider]="this.service.active">
+    <ng-container>
+        <div class="container" id="searchResult" *ngIf="!this.service.active" style="margin-top: 60px">
+            <!--    <label class="col-sm-2"></label>-->
+            <div>
+                <h5 style="text-align: center">Forecast at {{this.service.address}}</h5>
             </div>
-            <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane active" *ngIf="activeID==='nav-day-tab'" role="tabpanel" aria-labelledby="nav-day">
-                    <app-weather-chart></app-weather-chart>
-                </div>
-                <div class="tab-pane active" *ngIf="activeID==='nav-temp-tab'" role="tabpanel" aria-labelledby="nav-temp">
-                    <app-temp-chart></app-temp-chart>
-                </div>
-                <div class="tab-pane active" *ngIf="activeID==='nav-meteogram-tab'" role="tabpanel" aria-labelledby="nav-meteogram">
-                    <app-meteogram-chart></app-meteogram-chart>
-                </div>
-            </div>
-        </nav>
-    </div>
-    <div class="container" id="searchDetail" style="max-width: 1220px;" [hidden]="!this.service.isDetail">
-        <div class="row" style="margin-bottom: 20px; margin-top:15px;">
-            <label class="col-sm-1"><button class="btn btn-default" style="border: 1px solid #aaaeb3;" (click)="this.service.returnList()">
-                <span style="font-size: 20px;"><</span>List</button></label>
-<!--            {{this.service.getDate(0)}}-->
-            <h4 style="text-align: center;" class="col-sm-10">{{this.service.getDate(this.service.detailID)}}</h4>
-            <div class="col-sm-1 justify-content-end" >
-                <button class="btn justify-content-end" (click)="this.service.postTwitter()" style="float: right; padding:0;">
-                    <img id="twitter" src="../../assets/images/twitter.png" alt="twitter" style="float: right;" height="38" width="38">
+            <div style="text-align: right; margin-top: 40px;">
+                <button class="btn btn-default" (click)="addFavorite()" style="padding: 4px 6px 0 6px; border: 1px solid #aaaeb3;">
+                    <span class="material-icons" *ngIf="!this.service.checkFavorite()">star_border</span>
+                    <span class="material-icons" style="color:#fdd94b;" *ngIf="this.service.checkFavorite()">star</span>
+                </button>
+                <button class="btn btn-default" style="padding-top: 4px; color: #aaaeb3; vertical-align: middle;" (click)="this.service.showDetail(0)">
+                    <span>Detail ></span>
                 </button>
             </div>
+            <nav style="margin-top: 20px;">
+                <div class="nav nav-tabs justify-content-end" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link" [class.active]="'nav-day-tab' == activeID" id="nav-day-tab" data-toggle="tab"
+                       href="#" role="tab" aria-controls="nav-day" (click)="setActive('nav-day-tab')">Day View</a>
+                    <a class="nav-item nav-link" [class.active]="'nav-temp-tab' == activeID" id="nav-temp-tab" data-toggle="tab"
+                       href="#" role="tab" aria-controls="nav-temp" (click)="setActive('nav-temp-tab')">Daily Temp. Chart</a>
+                    <a class="nav-item nav-link" [class.active]="'nav-meteogram-tab' == activeID" id="nav-meteogram-tab" data-toggle="tab"
+                       href="#" role="tab" aria-controls="nav-meteogram" (click)="setActive('nav-meteogram-tab')">Meteogram</a>
+                </div>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane active" *ngIf="activeID==='nav-day-tab'" role="tabpanel" aria-labelledby="nav-day">
+                        <app-weather-chart></app-weather-chart>
+                    </div>
+                    <div class="tab-pane active" *ngIf="activeID==='nav-temp-tab'" role="tabpanel" aria-labelledby="nav-temp">
+                        <app-temp-chart></app-temp-chart>
+                    </div>
+                    <div class="tab-pane active" *ngIf="activeID==='nav-meteogram-tab'" role="tabpanel" aria-labelledby="nav-meteogram">
+                        <app-meteogram-chart></app-meteogram-chart>
+                    </div>
+                </div>
+            </nav>
         </div>
-        <table class="table table-striped">
-            <tbody>
-            <tr>
-                <th scope="row" class="col-sm-4">Status</th>
-                <td>{{this.service.getStatus(this.service.detailID)}}</td>
-            </tr>
-            <tr>
-                <th scope="row" class="col-sm-4">Max Temperature</th>
-                <td>{{this.service.getTempHigh(this.service.detailID)}}°F</td>
-            </tr>
-            <tr>
-                <th scope="row" class="col-sm-4">Min Temperature</th>
-                <td>{{this.service.getTempLow(this.service.detailID)}}°F</td>
-            </tr>
-            <tr>
-                <th scope="row" class="col-sm-4">Apparent Temperature</th>
-                <td>{{this.service.getTemp(this.service.detailID)}}°F</td>
-            </tr>
-            <tr>
-                <th scope="row" class="col-sm-4">Sun Rise Time</th>
-                <td>{{this.service.getSunriseTime(this.service.detailID)}}</td>
-            </tr>
-            <tr>
-                <th scope="row" class="col-sm-4">Sun Set Time</th>
-                <td>{{this.service.getSunsetTime(this.service.detailID)}}</td>
-            </tr>
-            <tr>
-                <th scope="row" class="col-sm-4">Humidity</th>
-                <td>{{this.service.getHumidity(this.service.detailID)}}%</td>
-            </tr>
-            <tr>
-                <th scope="row" class="col-sm-4">Wind Speed</th>
-                <td>{{this.service.getWindSpeed(this.service.detailID)}}mph</td>
-            </tr>
-            <tr>
-                <th scope="row" class="col-sm-4">Visibility</th>
-                <td>{{this.service.getVisibility(this.service.detailID)}}mi</td>
-            </tr>
-            <tr>
-                <th scope="row" class="col-sm-4">Cloud Cover</th>
-                <td>{{this.service.getCloudCover(this.service.detailID)}}%</td>
-            </tr>
-            </tbody>
-        </table>
-        <div id="map"></div>
-    </div>
+        <div class="container" id="searchDetail" style="max-width: 1220px;" *ngIf="this.service.active">
+            <div class="row" style="margin-bottom: 20px; margin-top:15px;">
+                <label class="col-sm-1"><button class="btn btn-default" style="border: 1px solid #aaaeb3;" (click)="this.service.returnList()">
+                    <span style="font-size: 20px;"><</span>List</button></label>
+                <!--            {{this.service.getDate(0)}}-->
+                <h4 style="text-align: center;" class="col-sm-10">{{this.service.getDate(this.service.detailID)}}</h4>
+                <div class="col-sm-1 justify-content-end" >
+                    <button class="btn justify-content-end" (click)="this.service.postTwitter()" style="float: right; padding:0;">
+                        <img id="twitter" src="../../assets/images/twitter.png" alt="twitter" style="float: right;" height="38" width="38">
+                    </button>
+                </div>
+            </div>
+            <table class="table table-striped">
+                <tbody>
+                <tr>
+                    <th scope="row" class="col-sm-4">Status</th>
+                    <td>{{this.service.getStatus(this.service.detailID)}}</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="col-sm-4">Max Temperature</th>
+                    <td>{{this.service.getTempHigh(this.service.detailID)}}°F</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="col-sm-4">Min Temperature</th>
+                    <td>{{this.service.getTempLow(this.service.detailID)}}°F</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="col-sm-4">Apparent Temperature</th>
+                    <td>{{this.service.getTemp(this.service.detailID)}}°F</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="col-sm-4">Sun Rise Time</th>
+                    <td>{{this.service.getSunriseTime(this.service.detailID)}}</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="col-sm-4">Sun Set Time</th>
+                    <td>{{this.service.getSunsetTime(this.service.detailID)}}</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="col-sm-4">Humidity</th>
+                    <td>{{this.service.getHumidity(this.service.detailID)}}%</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="col-sm-4">Wind Speed</th>
+                    <td>{{this.service.getWindSpeed(this.service.detailID)}}mph</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="col-sm-4">Visibility</th>
+                    <td>{{this.service.getVisibility(this.service.detailID)}}mi</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="col-sm-4">Cloud Cover</th>
+                    <td>{{this.service.getCloudCover(this.service.detailID)}}%</td>
+                </tr>
+                </tbody>
+            </table>
+            <div id="map" style="max-width: 1220px;" [hidden]="!this.service.active"></div>
+        </div>
+    </ng-container>
 </div>
 
 <div class="container" style="max-width: 1220px; margin-top: 20px;" *ngIf="this.service.isFavorite">

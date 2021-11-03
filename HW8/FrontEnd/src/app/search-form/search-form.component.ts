@@ -78,7 +78,8 @@ export class SearchFormComponent implements OnInit {
             this.options = [];
             this.optionsStates = [];
             var city = this.service.searchForm.city.trim();
-            var url = "http://weathersearch-1998.wl.r.appspot.com/autocomplete?city=" + this.service.searchForm.city;
+            var url = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=" + this.service.searchForm.city
+                + "&types=(cities)&language=en&key=AIzaSyDInz2_kjtD__RQh6w_RxTmi7-8jG0S6ww";
             if (this.service.searchForm.city != "" && city.length != 0) {// check all blank
                 this.http.get(url).subscribe(data => {
                     // @ts-ignore

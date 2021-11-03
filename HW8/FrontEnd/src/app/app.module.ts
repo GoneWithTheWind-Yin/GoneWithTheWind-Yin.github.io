@@ -17,6 +17,7 @@ import {ChartModule} from 'angular-highcharts';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {NowhitespaceDirective} from './directives/nowhitespace.directive';
 import {MatInputModule} from "@angular/material/input";
+import {NoopAnimationsModule, BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
     declarations: [
@@ -39,6 +40,8 @@ import {MatInputModule} from "@angular/material/input";
         ChartModule,
         MatAutocompleteModule,
         MatInputModule,
+        NoopAnimationsModule,
+        BrowserAnimationsModule,
     ],
     providers: [ServiceService],
     bootstrap: [AppComponent]

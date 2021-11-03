@@ -17,7 +17,7 @@ export class ServiceService {
     public isError: any = false;
     public detailID: any = 0;
     public isDetail: any = false;
-    public active: any;
+    public active: any = 0;
     public lat: any = 30;
     public lng: any = 110;
     public map: any;
@@ -25,7 +25,7 @@ export class ServiceService {
     public city: any;
     public state: any;
 
-    // @Output() slide = new EventEmitter<string>();
+    @Output() slide = new EventEmitter<string>();
 
     public getWeatherDataByIP(period: any) {
         var ipInfoUrl = "https://ipinfo.io/?token=0b676f0b07b1a9"
@@ -93,16 +93,20 @@ export class ServiceService {
     }
 
     showDetail(i: any) {
+        this.active++;
+        // console.log(this.active);
         this.detailID = i;
         this.isDetail = true;
-        // this.slide.emit("right");
-        this.initMap();
+        setTimeout(() => {
+            this.initMap();
+        }, 500)
     }
 
     returnList() {
+        this.active--;
+        // console.log(this.active);
         this.detailID = 0;
         this.isDetail = false;
-        // this.slide.emit("left");
     }
 
     initMap(): void {
