@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, Validators} from "@angular/forms";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ServiceService} from "../service/service.service";
 
 @Component({
@@ -73,15 +73,21 @@ export class SearchFormComponent implements OnInit {
     public options: any;
     public optionsStates: any;
 
+    public httpOptions = {
+        headers: new HttpHeaders({
+            'Access-Control-Allow-Origin': '*',
+        })
+    };
+
     getAutoComplete(event: any) {
         setTimeout( () => {
             this.options = [];
             this.optionsStates = [];
             var city = this.service.searchForm.city.trim();
-            var url = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=" + this.service.searchForm.city
-                + "&types=(cities)&language=en&key=AIzaSyDInz2_kjtD__RQh6w_RxTmi7-8jG0S6ww";
+            var url = "http://weathersearch-1998.wl.r.appspot.com/autocomplete?city=" + this.service.searchForm.city;
             if (this.service.searchForm.city != "" && city.length != 0) {// check all blank
                 this.http.get(url).subscribe(data => {
+                    console.log(data);
                     // @ts-ignore
                     var arr = data["predictions"];
                     for (let i = 0; i < arr.length; ++i) {

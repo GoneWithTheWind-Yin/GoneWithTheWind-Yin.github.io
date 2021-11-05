@@ -1,0 +1,7 @@
+{
+  "/get": {
+    "target": "http://weathersearch-1998.wl.r.appspot.com/",
+    "secure": true,
+    "changeOrigin": true
+  }
+}

@@ -406,6 +406,12 @@ export class ServiceService {
         });
     }
 
+    reset(event: any) {
+        this.searchForm.state = "";
+        this.searchForm.city = "";
+        this.state = "Select Your State";
+    }
+
     constructor(private http: HttpClient) {
     }
 }
