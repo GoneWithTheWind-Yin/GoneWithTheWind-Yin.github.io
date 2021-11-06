@@ -40,8 +40,8 @@ app.get('/search', function (req, res) {
         searchURL += "&timesteps=1h";
     }
     searchURL += "&units=imperial&timezone=America/Los_Angeles";
-    searchURL += "&apikey=XPIAROop3O9FnGayZBJxA5xxmb7BS2ix";
-    res.setHeader("Content-Type", "text/plain");
+    searchURL += "&apikey=mMSmnGIVw3Fr1WsrBUpy8k7wcIMqzbNg";
+    res.setHeader("Content-Type", "application/json; charset=utf-8");
     res.setHeader("Access-Control-Allow-Origin", "*");
     https.get(searchURL, function (request) {
         var text = "";
@@ -57,7 +57,7 @@ app.get('/search', function (req, res) {
 app.get('/autocomplete', function (req, res) {
     var params = url.parse(req.url, true).query;
     var completeURL = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=' + params.city + '&types=(cities)&language=en&key=AIzaSyDInz2_kjtD__RQh6w_RxTmi7-8jG0S6ww';
-    res.setHeader("Content-Type", "text/plain");
+    res.setHeader("Content-Type", "application/json; charset=utf-8");
     res.setHeader("Access-Control-Allow-Origin", "*");
     https.get(completeURL, function (request) {
         var text = "";

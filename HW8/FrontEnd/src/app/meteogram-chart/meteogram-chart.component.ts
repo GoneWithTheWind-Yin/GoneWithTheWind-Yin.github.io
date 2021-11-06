@@ -280,36 +280,6 @@ export class MeteogramChartComponent implements OnInit {
     drawBlocksForWindArrows = function (chart: any) {
         const xAxis = chart.xAxis[0];
 
-        // for (
-        //     let pos = xAxis.min, max = xAxis.max, i = 0;
-        //     pos <= max + 36e5; pos += 36e5,
-        //         i += 1
-        // ) {
-        //
-        //     // Get the X position
-        //     const isLast = pos === max + 36e5,
-        //         x = Math.round(xAxis.toPixels(pos)) + (isLast ? 0.5 : -0.5);
-        //
-        //     // Draw the vertical dividers and ticks
-        //     // @ts-ignore
-        //     const isLong = this.resolution > 36e5 ?
-        //         // @ts-ignore
-        //         pos % this.resolution === 0 :
-        //         i % 2 === 0;
-        //
-        //     chart.renderer
-        //         .path([
-        //             'M', x, chart.plotTop + chart.plotHeight + (isLong ? 0 : 28),
-        //             'L', x, chart.plotTop + chart.plotHeight + 32,
-        //             'Z'
-        //         ])
-        //         .attr({
-        //             stroke: chart.options.chart.plotBorderColor,
-        //             'stroke-width': 1,
-        //         })
-        //         .add();
-        // }
-
         // Center items in block
         chart.get('windbarbs').markerGroup.attr({
             translateX: chart.get('windbarbs').markerGroup.translateX + 5

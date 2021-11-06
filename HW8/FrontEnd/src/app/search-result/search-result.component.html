@@ -1,24 +1,30 @@
 <div class="container" style="max-width: 1220px;">
     <div style="text-align: center; margin-top: 20px">
         <button type="button" [ngClass]="this.service.resultClass" (click)="this.service.getResult()">Results</button>
-        <button type="button" [ngClass]="this.service.favoriteClass" style="margin-left: 10px" (click)="this.service.getFavorite()">Favorites</button>
+        <button type="button" [ngClass]="this.service.favoriteClass" style="margin-left: 10px"
+                (click)="this.service.getFavorite()">Favorites
+        </button>
     </div>
 </div>
 <div class="row" style="margin-top: 60px" *ngIf="this.service.loadStatus">
     <label class="col-sm-3"></label>
     <div class="col-sm-6">
         <div class="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"></div>
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="40"
+                 aria-valuemin="0" aria-valuemax="100" style="width: 40%"></div>
         </div>
     </div>
 </div>
-<div id="results-div" class="container" *ngIf="this.service.isError && !this.service.loadStatus" style="max-width: 1200px; margin-top: 20px;">
+<div id="results-div" class="container"
+     *ngIf="this.service.isError && !this.service.loadStatus && this.service.isResult"
+     style="max-width: 1220px; margin-top: 20px;">
     <div class="alert alert-danger" role="alert">
         An error occurred please try again later
     </div>
 </div>
 <!-- && this.service.checkStatus()-->
-<div id="slideContainer" *ngIf="this.service.isResult && this.service.checkStatus()" [@animSlider]="this.service.active">
+<div id="slideContainer" *ngIf="this.service.isResult && this.service.checkStatus()"
+     [@animSlider]="this.service.active">
     <ng-container>
         <div class="container" id="searchResult" *ngIf="!this.service.active" style="margin-top: 60px">
             <!--    <label class="col-sm-2"></label>-->
@@ -26,31 +32,42 @@
                 <h5 style="text-align: center">Forecast at {{this.service.address}}</h5>
             </div>
             <div style="text-align: right; margin-top: 40px;">
-                <button class="btn btn-default" (click)="addFavorite()" style="padding: 4px 6px 0 6px; border: 1px solid #aaaeb3;">
+                <button class="btn btn-default" (click)="addFavorite()"
+                        style="padding: 4px 6px 0 6px; border: 1px solid #aaaeb3;">
                     <span class="material-icons" *ngIf="!this.service.checkFavorite()">star_border</span>
                     <span class="material-icons" style="color:#fdd94b;" *ngIf="this.service.checkFavorite()">star</span>
                 </button>
-                <button class="btn btn-default" style="padding-top: 4px; color: #aaaeb3; vertical-align: middle;" (click)="this.service.showDetail(0)">
-                    <span>Detail ></span>
+                <button class="btn btn-default" style="padding-top: 4px; color: #aaaeb3; vertical-align: middle;"
+                        (click)="this.service.showDetail(0)">
+                    <span>Details ></span>
                 </button>
             </div>
             <nav style="margin-top: 20px;">
                 <div class="nav nav-tabs justify-content-end" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link" [class.active]="'nav-day-tab' == activeID" id="nav-day-tab" data-toggle="tab"
-                       href="#" role="tab" aria-controls="nav-day" (click)="setActive('nav-day-tab')">Day View</a>
-                    <a class="nav-item nav-link" [class.active]="'nav-temp-tab' == activeID" id="nav-temp-tab" data-toggle="tab"
-                       href="#" role="tab" aria-controls="nav-temp" (click)="setActive('nav-temp-tab')">Daily Temp. Chart</a>
-                    <a class="nav-item nav-link" [class.active]="'nav-meteogram-tab' == activeID" id="nav-meteogram-tab" data-toggle="tab"
-                       href="#" role="tab" aria-controls="nav-meteogram" (click)="setActive('nav-meteogram-tab')">Meteogram</a>
+                    <a class="nav-item nav-link" [class.active]="'nav-day-tab' == this.service.activeID"
+                       id="nav-day-tab" data-toggle="tab"
+                       href="#first" role="tab" aria-controls="nav-day" (click)="this.service.setActive('nav-day-tab')">Day
+                        View</a>
+                    <a class="nav-item nav-link" [class.active]="'nav-temp-tab' == this.service.activeID"
+                       id="nav-temp-tab" data-toggle="tab"
+                       href="#second" role="tab" aria-controls="nav-temp" (click)="this.service.setActive('nav-temp-tab')">Daily
+                        Temp. Chart</a>
+                    <a class="nav-item nav-link" [class.active]="'nav-meteogram-tab' == this.service.activeID"
+                       id="nav-meteogram-tab" data-toggle="tab"
+                       href="#third" role="tab" aria-controls="nav-meteogram"
+                       (click)="this.service.setActive('nav-meteogram-tab')">Meteogram</a>
                 </div>
                 <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane active" *ngIf="activeID==='nav-day-tab'" role="tabpanel" aria-labelledby="nav-day">
+                    <div class="tab-pane active" id="first" *ngIf="this.service.activeID==='nav-day-tab'" role="tabpanel"
+                         aria-labelledby="nav-day">
                         <app-weather-chart></app-weather-chart>
                     </div>
-                    <div class="tab-pane active" *ngIf="activeID==='nav-temp-tab'" role="tabpanel" aria-labelledby="nav-temp">
+                    <div class="tab-pane active" id="second" *ngIf="this.service.activeID==='nav-temp-tab'" role="tabpanel"
+                         aria-labelledby="nav-temp">
                         <app-temp-chart></app-temp-chart>
                     </div>
-                    <div class="tab-pane active" *ngIf="activeID==='nav-meteogram-tab'" role="tabpanel" aria-labelledby="nav-meteogram">
+                    <div class="tab-pane active" id="third" *ngIf="this.service.activeID==='nav-meteogram-tab'" role="tabpanel"
+                         aria-labelledby="nav-meteogram">
                         <app-meteogram-chart></app-meteogram-chart>
                     </div>
                 </div>
@@ -58,13 +75,20 @@
         </div>
         <div class="container" id="searchDetail" style="max-width: 1220px;" *ngIf="this.service.active">
             <div class="row" style="margin-bottom: 20px; margin-top:15px;">
-                <label class="col-sm-1"><button class="btn btn-default" style="border: 1px solid #aaaeb3;" (click)="this.service.returnList()">
-                    <span style="font-size: 20px;"><</span>List</button></label>
-                <!--            {{this.service.getDate(0)}}-->
-                <h4 style="text-align: center;" class="col-sm-10">{{this.service.getDate(this.service.detailID)}}</h4>
-                <div class="col-sm-1 justify-content-end" >
-                    <button class="btn justify-content-end" (click)="this.service.postTwitter()" style="float: right; padding:0;">
-                        <img id="twitter" src="../../assets/images/twitter.png" alt="twitter" style="float: right;" height="38" width="38">
+                <div class="col-3">
+                    <button class="btn btn-default" style="border: 1px solid #aaaeb3;"
+                            (click)="this.service.returnList()">
+                        <span style="font-size: 20px;"><</span>List
+                    </button>
+                </div>
+                <div class="col-6">
+                    <h4 style="text-align: center;">{{this.service.getDate(this.service.detailID)}}</h4>
+                </div>
+                <div class="col-3">
+                    <button class="btn justify-content-end" (click)="this.service.postTwitter()"
+                            style="float: right; padding:0;">
+                        <img id="twitter" src="../../assets/images/twitter.png" alt="twitter" style="float: right;"
+                             height="38" width="38">
                     </button>
                 </div>
             </div>
@@ -112,17 +136,17 @@
                 </tr>
                 </tbody>
             </table>
-            <div id="map" style="max-width: 1220px;" [hidden]="!this.service.active"></div>
+            <div id="map" style="max-width: 1220px; min-height: 500px;" [hidden]="!this.service.active"></div>
         </div>
     </ng-container>
 </div>
 
 <div class="container" style="max-width: 1220px; margin-top: 20px;" *ngIf="this.service.isFavorite">
-    <div class="alert alert-warning" role="alert" *ngIf="this.service.favoriteMap.size == 0">
+    <div class="alert alert-warning" role="alert" *ngIf="this.service.getFavoriteSize() == 0">
         <strong>Sorry!</strong> No records found.
     </div>
-    <div class="table-responsive" *ngIf="this.service.favoriteMap.size > 0">
-        <table class="table table-hover" *ngIf="this.service.favoriteMap.size > 0">
+    <div class="table-responsive" *ngIf="this.service.getFavoriteSize() > 0">
+        <table class="table table-hover">
             <thead>
             <tr>
                 <th scope="col" class="col-sm-1">#</th>
@@ -132,11 +156,15 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let key of this.service.favoriteMap.keys() let i = index">
-                <th scope="row">{{i + 1}}</th>
-                <td class="btn-link" (click)="this.service.searchWeather(key)">{{this.service.favoriteMap.get(key).city}}</td>
-                <td class="btn-link" (click)="this.service.searchWeather(key)">{{this.service.favoriteMap.get(key).state}}</td>
-                <td><span class="material-icons" (click)="service.removeFavorite(key)">delete</span></td>
+            <tr *ngFor="let key of this.service.getFavoriteList()">
+                <th scope="row" style="vertical-align: middle;">{{key + 1}}</th>
+                <td class="btn-link" style="vertical-align: middle;" (click)="this.service.searchWeather(key)">{{this.service.getCity(key)}}</td>
+                <td class="btn-link" style="vertical-align: middle;" (click)="this.service.searchWeather(key)">{{this.service.getState(key)}}</td>
+                <td>
+                    <button class="btn" (click)="service.removeFavorite(key)">
+                        <fa-icon [icon]="trash"></fa-icon>
+                    </button>
+                </td>
             </tr>
             </tbody>
         </table>

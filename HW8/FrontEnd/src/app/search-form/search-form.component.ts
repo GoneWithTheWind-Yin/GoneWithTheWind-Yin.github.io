@@ -84,7 +84,7 @@ export class SearchFormComponent implements OnInit {
             this.options = [];
             this.optionsStates = [];
             var city = this.service.searchForm.city.trim();
-            var url = "http://weathersearch-1998.wl.r.appspot.com/autocomplete?city=" + this.service.searchForm.city;
+            var url = "https://weathersearch-1998.wl.r.appspot.com/autocomplete?city=" + this.service.searchForm.city;
             if (this.service.searchForm.city != "" && city.length != 0) {// check all blank
                 this.http.get(url).subscribe(data => {
                     console.log(data);

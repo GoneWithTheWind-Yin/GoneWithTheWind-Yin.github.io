@@ -18,6 +18,7 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {NowhitespaceDirective} from './directives/nowhitespace.directive';
 import {MatInputModule} from "@angular/material/input";
 import {NoopAnimationsModule, BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 @NgModule({
     declarations: [
@@ -42,6 +43,7 @@ import {NoopAnimationsModule, BrowserAnimationsModule} from "@angular/platform-b
         MatInputModule,
         NoopAnimationsModule,
         BrowserAnimationsModule,
+        FontAwesomeModule,
     ],
     providers: [ServiceService],
     bootstrap: [AppComponent]

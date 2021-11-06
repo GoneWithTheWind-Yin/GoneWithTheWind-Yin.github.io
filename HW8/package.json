@@ -1,13 +1,13 @@
 {
-  "name": "appengine-hello-world",
-  "description": "Simple Hello World Node.js sample for Google App Engine Standard Environment.",
+  "name": "weather-forecast-website",
+  "description": "A weather forecast website designed by NodeJS and angular",
   "version": "0.0.2",
   "private": true,
   "license": "Apache-2.0",
-  "author": "Google Inc.",
+  "author": "Guanyu Yin",
   "repository": {
     "type": "git",
-    "url": "https://github.com/GoogleCloudPlatform/nodejs-docs-samples.git"
+    "url": "https://github.com/GoneWithTheWind-Yin/GoneWithTheWind-Yin.github.io.git"
   },
   "engines": {
     "node": ">=14.0.0"

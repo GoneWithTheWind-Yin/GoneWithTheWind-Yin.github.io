@@ -1,9 +1,10 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ServiceService} from "../service/service.service";
 import {animate, group, query, style, transition, trigger} from "@angular/animations";
+import {faTrashAlt} from '@fortawesome/free-solid-svg-icons';
 
 const left = [
-    query(':enter, :leave', style({ position: 'fixed', width: '100%' }), { optional: true }),
+    query(':enter, :leave', style({ position: 'relative', width: '100%' }), { optional: true }),
     group([
         query(':enter', [style({ transform: 'translateX(-100%)' }), animate('.3s ease-out', style({ transform: 'translateX(0%)' }))], {
             optional: true,
@@ -15,7 +16,7 @@ const left = [
 ];
 
 const right = [
-    query(':enter, :leave', style({ position: 'fixed', width: '100%' }), { optional: true }),
+    query(':enter, :leave', style({ position: 'relative', width: '100%' }), { optional: true }),
     group([
         query(':enter', [style({ transform: 'translateX(100%)' }), animate('.3s ease-out', style({ transform: 'translateX(0%)' }))], {
             optional: true,
@@ -41,14 +42,9 @@ const right = [
 export class SearchResultComponent implements OnInit {
 
     // @Output() slide = new EventEmitter<string>();
+    trash = faTrashAlt;
 
     constructor(public service: ServiceService) {
-    }
-
-    public activeID = "nav-day-tab";
-
-    setActive(ID: any) {
-        this.activeID = ID
     }
 
     addFavorite() {

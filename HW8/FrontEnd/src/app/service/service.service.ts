@@ -69,7 +69,7 @@ export class ServiceService {
     }
 
     public getWeatherData(loc: any, period: any) {
-        var URL = "http://weathersearch-1998.wl.r.appspot.com/search?" + "location=" + loc + "&timesteps=" + period;
+        var URL = "https://weathersearch-1998.wl.r.appspot.com/search?" + "location=" + loc + "&timesteps=" + period;
         this.http.get(URL).subscribe(data => {
             if (period == "1d") {
                 this.dailyWeatherData = data;
@@ -90,6 +90,12 @@ export class ServiceService {
         }
         this.loadStatus = false;
         return true;
+    }
+
+    public activeID = "nav-day-tab";
+
+    setActive(ID: any) {
+        this.activeID = ID
     }
 
     showDetail(i: any) {
@@ -133,7 +139,7 @@ export class ServiceService {
         1102: "mostly_cloudy.svg",
         1001: "cloudy.svg",
         2000: "fog.svg",
-        2001: "fog_light.svg",
+        2100: "fog_light.svg",
         8000: "tstorm.svg",
         5001: "flurries.svg",
         5100: "snow_light.svg",
@@ -161,7 +167,7 @@ export class ServiceService {
         1102: "Mostly Cloudy",
         1001: "Cloudy",
         2000: "Fog",
-        2001: "Light Fog",
+        2100: "Light Fog",
         8000: "Thunderstorm",
         5001: "Flurries",
         5100: "Light Snow",
@@ -249,7 +255,7 @@ export class ServiceService {
 
     getDate(i: any) {
         var date = new Date(this.dailyWeatherData['data']['timelines'][0]['intervals'][i]["startTime"]).toDateString();
-        return this.weekDict[date.substr(0, 3)] + "," + date.substr(3);
+        return this.weekDict[date.substr(0, 3)] + ", " + date.substr(8, 3) + date.substr(4, 4) + date.substr(11);
     }
 
     getStatus(i: any) {
@@ -301,32 +307,64 @@ export class ServiceService {
     }
 
     // favoriteList: any = [];
-    favoriteMap = new Map();
+    // favoriteMap = new Map();
 
     checkFavorite() {
-        return this.favoriteMap.get(this.address) != undefined;
-        // return this.favoriteList.count({"city": this.city, "state": this.state})
+        console.log(this.address);
+        return localStorage.getItem(this.address) != undefined;
+    }
+
+    getFavoriteSize() {
+        return localStorage.length;
+    }
+
+    getFavoriteList() {
+        var arr = [];
+        for (let i = 0; i < localStorage.length; ++i) {
+            arr.push(i);
+        }
+        return arr;
     }
 
     appendFavorite() {
-        // this.favoriteList.push({"city": this.city, "state": this.state});
-        if (this.favoriteMap.get(this.address) != undefined) {
-            this.removeFavorite(this.address);
+        if (localStorage.getItem(this.address) != undefined) {
+            localStorage.removeItem(this.address);
             return;
         }
-        this.favoriteMap.set(this.address, {"city": this.city, "state": this.state});
+        localStorage.setItem(this.address, this.city + "," + this.state);
     }
 
     removeFavorite(key: any) {
-        this.favoriteMap.delete(key);
+        var loc = localStorage.key(key);
+        if (loc != null) {
+            localStorage.removeItem(loc);
+        }
     }
 
     searchWeather(key: any) {
         this.clearForm();
-        this.searchForm.city = this.favoriteMap.get(key).city;
-        this.searchForm.state = this.favoriteMap.get(key).state;
+        var loc = localStorage.key(key);
+        // @ts-ignore
+        var locList = loc.split(',');
+        this.searchForm.city = locList[0];
+        this.searchForm.state = locList[1].substr(1);
         this.getResult();
         this.submitForm();
+    }
+
+    getCity(key: any) {
+        var loc = localStorage.key(key);
+        // @ts-ignore
+        var locList = loc.split(',');
+        return locList[0];
+
+    }
+
+    getState(key: any) {
+        var loc = localStorage.key(key);
+        // @ts-ignore
+        var locList = loc.split(',');
+        return locList[1].substr(1);
     }
 
     public searchForm: any = {
@@ -352,6 +390,9 @@ export class ServiceService {
     submitForm() {
         console.log(this.searchForm);
         this.loadStatus = true;
+        this.isError = false;
+        this.activeID = "nav-day-tab";
+        this.getResult();
         if (this.searchForm.currentLocation) {
             this.getWeatherDataByIP("1d");
             this.getWeatherDataByIP("1h");
@@ -370,6 +411,9 @@ export class ServiceService {
         this.dailyWeatherData = "";
         this.hourlyWeatherData = "";
         this.loadStatus = false;
+        this.isError = false;
+        this.active = 0;
+        this.isDetail = false;
         this.getResult();
     }
 
