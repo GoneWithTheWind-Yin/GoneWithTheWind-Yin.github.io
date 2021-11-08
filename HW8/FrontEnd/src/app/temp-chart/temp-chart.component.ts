@@ -79,7 +79,7 @@ export class TempChartComponent implements OnInit {
 
     ngOnInit(): void {
         // @ts-ignore
-        Highcharts.chart('container', this.showChart());
+        Highcharts.chart('temp-container', this.showChart());
     }
 
 }

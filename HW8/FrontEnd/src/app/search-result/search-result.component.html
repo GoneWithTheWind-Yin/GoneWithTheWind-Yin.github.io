@@ -58,15 +58,15 @@
                        (click)="this.service.setActive('nav-meteogram-tab')">Meteogram</a>
                 </div>
                 <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane active" id="first" *ngIf="this.service.activeID==='nav-day-tab'" role="tabpanel"
+                    <div class="tab-pane active" id="first" [hidden]="!(this.service.activeID === 'nav-day-tab')" role="tabpanel"
                          aria-labelledby="nav-day">
                         <app-weather-chart></app-weather-chart>
                     </div>
-                    <div class="tab-pane active" id="second" *ngIf="this.service.activeID==='nav-temp-tab'" role="tabpanel"
+                    <div class="tab-pane active" id="second" [hidden]="!(this.service.activeID==='nav-temp-tab')" role="tabpanel"
                          aria-labelledby="nav-temp">
                         <app-temp-chart></app-temp-chart>
                     </div>
-                    <div class="tab-pane active" id="third" *ngIf="this.service.activeID==='nav-meteogram-tab'" role="tabpanel"
+                    <div class="tab-pane active" id="third" [hidden]="!(this.service.activeID === 'nav-meteogram-tab')" role="tabpanel"
                          aria-labelledby="nav-meteogram">
                         <app-meteogram-chart></app-meteogram-chart>
                     </div>
@@ -76,7 +76,7 @@
         <div class="container" id="searchDetail" style="max-width: 1220px;" *ngIf="this.service.active">
             <div class="row" style="margin-bottom: 20px; margin-top:15px;">
                 <div class="col-3">
-                    <button class="btn btn-default" style="border: 1px solid #aaaeb3;"
+                    <button class="btn btn-outline-dark"
                             (click)="this.service.returnList()">
                         <span style="font-size: 20px;"><</span>List
                     </button>
@@ -87,7 +87,7 @@
                 <div class="col-3">
                     <button class="btn justify-content-end" (click)="this.service.postTwitter()"
                             style="float: right; padding:0;">
-                        <img id="twitter" src="../../assets/images/twitter.png" alt="twitter" style="float: right;"
+                        <img id="twitter" src="../../assets/images/twitter.png" alt="twitter" style="float: right; border-radius: 5px;"
                              height="38" width="38">
                     </button>
                 </div>
@@ -100,15 +100,15 @@
                 </tr>
                 <tr>
                     <th scope="row" class="col-sm-4">Max Temperature</th>
-                    <td>{{this.service.getTempHigh(this.service.detailID)}}°F</td>
+                    <td>{{this.service.getTempHigh(this.service.detailID)}} °F</td>
                 </tr>
                 <tr>
                     <th scope="row" class="col-sm-4">Min Temperature</th>
-                    <td>{{this.service.getTempLow(this.service.detailID)}}°F</td>
+                    <td>{{this.service.getTempLow(this.service.detailID)}} °F</td>
                 </tr>
                 <tr>
                     <th scope="row" class="col-sm-4">Apparent Temperature</th>
-                    <td>{{this.service.getTemp(this.service.detailID)}}°F</td>
+                    <td>{{this.service.getTemp(this.service.detailID)}} °F</td>
                 </tr>
                 <tr>
                     <th scope="row" class="col-sm-4">Sun Rise Time</th>
@@ -120,19 +120,19 @@
                 </tr>
                 <tr>
                     <th scope="row" class="col-sm-4">Humidity</th>
-                    <td>{{this.service.getHumidity(this.service.detailID)}}%</td>
+                    <td>{{this.service.getHumidity(this.service.detailID)}} %</td>
                 </tr>
                 <tr>
                     <th scope="row" class="col-sm-4">Wind Speed</th>
-                    <td>{{this.service.getWindSpeed(this.service.detailID)}}mph</td>
+                    <td>{{this.service.getWindSpeed(this.service.detailID)}} mph</td>
                 </tr>
                 <tr>
                     <th scope="row" class="col-sm-4">Visibility</th>
-                    <td>{{this.service.getVisibility(this.service.detailID)}}mi</td>
+                    <td>{{this.service.getVisibility(this.service.detailID)}} mi</td>
                 </tr>
                 <tr>
                     <th scope="row" class="col-sm-4">Cloud Cover</th>
-                    <td>{{this.service.getCloudCover(this.service.detailID)}}%</td>
+                    <td>{{this.service.getCloudCover(this.service.detailID)}} %</td>
                 </tr>
                 </tbody>
             </table>

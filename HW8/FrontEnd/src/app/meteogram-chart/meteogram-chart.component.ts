@@ -62,7 +62,7 @@ export class MeteogramChartComponent implements OnInit {
         this.getUpdate();
         return {
             chart: {
-                renderTo: "container",
+                renderTo: "meteogram-container",
                 marginBottom: 70,
                 marginRight: 40,
                 marginTop: 50,

@@ -350,6 +350,8 @@ export class ServiceService {
         this.searchForm.state = locList[1].substr(1);
         this.getResult();
         this.submitForm();
+        this.searchForm.city = "";
+        this.searchForm.state = "Select Your State";
     }
 
     getCity(key: any) {
@@ -423,6 +425,7 @@ export class ServiceService {
     isFavorite = false;
 
     getResult() {
+        this.active = 0;
         this.resultClass = "btn btn-primary";
         this.favoriteClass = "btn btn-default";
         this.isResult = true;
