@@ -105,7 +105,7 @@ export class ServiceService {
         this.isDetail = true;
         setTimeout(() => {
             this.initMap();
-        }, 500)
+        }, 300)
     }
 
     returnList() {
