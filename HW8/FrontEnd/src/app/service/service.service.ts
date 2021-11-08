@@ -98,14 +98,17 @@ export class ServiceService {
         this.activeID = ID
     }
 
-    showDetail(i: any) {
+    showDetail(i: any, time: any) {
+        // if (this.hourlyWeatherData["data"] == undefined) {
+        //     return;
+        // }
         this.active++;
         // console.log(this.active);
         this.detailID = i;
         this.isDetail = true;
         setTimeout(() => {
             this.initMap();
-        }, 500)
+        }, 300 + time)
     }
 
     returnList() {
@@ -352,6 +355,7 @@ export class ServiceService {
         this.submitForm();
         this.searchForm.city = "";
         this.searchForm.state = "Select Your State";
+        this.showDetail(0, 1000);
     }
 
     getCity(key: any) {
@@ -401,7 +405,6 @@ export class ServiceService {
         } else {
             this.getWeatherDataByLoc(this.searchForm.street, this.searchForm.city, this.searchForm.state, "1d");
             this.getWeatherDataByLoc(this.searchForm.street, this.searchForm.city, this.searchForm.state, "1h");
-            // console.log(this.service.dailyWeatherData);
         }
     }
 
