@@ -11,7 +11,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let i of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]" (click)="this.service.showDetail(i, 0)">
+        <tr *ngFor="let i of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]" (click)="this.service.showDetail(i)">
             <th scope="row" style="vertical-align: middle;">{{i + 1}}</th>
             <td class="btn-link" style="vertical-align: middle;">{{this.service.getDate(i)}}</td>
             <td style="vertical-align: middle;"><img class="img-responsive" src="{{this.service.getImage(i)}}" alt="weather" style="width: 35px; height: 35px; padding-bottom: 4px;">{{this.service.getStatus(i)}}</td>
