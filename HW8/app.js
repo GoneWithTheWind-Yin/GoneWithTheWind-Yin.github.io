@@ -40,7 +40,7 @@ app.get('/search', function (req, res) {
         searchURL += "&timesteps=1h";
     }
     searchURL += "&units=imperial&timezone=America/Los_Angeles";
-    searchURL += "&apikey=XPIAROop3O9FnGayZBJxA5xxmb7BS2ix";
+    searchURL += "&apikey=mMSmnGIVw3Fr1WsrBUpy8k7wcIMqzbNg";
     res.setHeader("Content-Type", "application/json; charset=utf-8");
     res.setHeader("Access-Control-Allow-Origin", "*");
     https.get(searchURL, function (request) {
