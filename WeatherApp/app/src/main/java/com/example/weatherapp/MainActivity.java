@@ -1,22 +1,34 @@
 package com.example.weatherapp;
 
+import android.app.SearchManager;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.TextView;
-import android.widget.Toolbar;
+
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.weatherapp.adapters.AutoCompleteAdapter;
 import com.example.weatherapp.adapters.MainTabsAdapter;
-import com.example.weatherapp.fragment.Favorites;
+import com.example.weatherapp.api.GetWeatherData;
 import com.google.android.material.tabs.TabLayout;
 
 import org.json.JSONArray;
@@ -24,75 +36,99 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 // TODO 设计有多个Tab的加载策略
 public class MainActivity extends AppCompatActivity {
     private RequestQueue requestQueue;
     private ViewPager mainTabs;
-    private ArrayList<JSONObject> favorList = new ArrayList<>();
+    private AutoCompleteAdapter autoCompleteAdapter;
+    private FragmentManager mainFragmentManager;
+    private GetWeatherData getWeatherData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
-        getWeatherDataByIP();
+        getWeatherData.getWeatherDataByIP(mainFragmentManager);
     }
 
-    public void init() {
+    @Override
+    protected void onRestart() {
+        // TODO 添加一个刷新列表的操作
+        super.onRestart();
+    }
+
+    private void init() {
+        mainFragmentManager = getSupportFragmentManager();
+
         requestQueue = Volley.newRequestQueue(this);
         mainTabs = findViewById(R.id.pager);
+
+        getWeatherData = new GetWeatherData(mainTabs, requestQueue, mainFragmentManager);
 
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(mainTabs);
     }
 
-    public void getWeatherDataByIP() {
-        // 后续可以改为直接获取地理位置
-        String url = "https://ipinfo.io/?token=0b676f0b07b1a9";
-        JsonObjectRequest request = new JsonObjectRequest
-                (Request.Method.GET, url, null, response -> {
-                    try {
-                        requestWeatherData(response.getString("loc"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        final SearchView.SearchAutoComplete autoCompleteTextView = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
+        autoCompleteTextView.setAdapter(autoCompleteAdapter);
+        autoCompleteTextView.setDropDownBackgroundResource(R.color.colorWhite);
+        autoCompleteTextView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view,
+                                            int position, long id) {
+                        autoCompleteTextView.setText(autoCompleteAdapter.getObject(position));
                     }
-                }, error -> {
-                    error.printStackTrace();
                 });
-        requestQueue.add(request);
+        searchView.setOnQueryTextListener(
+                new SearchView.OnQueryTextListener(){
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        if (newText.length() >= 1)
+                            getAutoComplete(newText, autoCompleteTextView);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        if (query.length() > 0) {
+                            Intent intent = new Intent(MainActivity.this, SearchableActivity.class);
+                            intent.putExtra("CityBundle", query);
+                            startActivity(intent);
+                        }
+                        return false;
+                    }
+                });
+
+        return true;
     }
 
-    public void getWeatherDataByCity(String city, String state) {
-        String url = "https://maps.googleapis.com/maps/api/geocode/json?" +
-                "&key=AIzaSyAd9Qbqgx8fyM2WufIIkdlRcBt8mDrtdoM&language=en_US&address=" + city + ", " + state;
+    public void getAutoComplete(String input, SearchView.SearchAutoComplete s) {
+        String url = "https://weathersearch-1998.wl.r.appspot.com/autocomplete?city=" + input;
         JsonObjectRequest request = new JsonObjectRequest
                 (Request.Method.GET, url, null, response -> {
+                    List<String> cityList = new ArrayList<>();
                     try {
-                        JSONArray results = response.getJSONArray("results");
-                        JSONObject geometry = results.getJSONObject(0).getJSONObject("geometry");
-                        JSONObject location = geometry.getJSONObject("location");
-                        requestWeatherData(location.getString("lat") + "," + location.getString("lng"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }, error -> {
-                    error.printStackTrace();
-                });
-        requestQueue.add(request);
-    }
-
-    public void requestWeatherData(String loc) {
-        String url = "https://api.tomorrow.io/v4/timelines?fields=temperature,temperatureApparent," +
-                "temperatureMin,temperatureMax,windSpeed,windDirection,humidity,pressureSeaLevel," +
-                "uvIndex,weatherCode,precipitationProbability,precipitationType,sunriseTime,sunsetTime," +
-                "visibility,moonPhase,cloudCover&timesteps=1d&units=imperial&timezone=America/Los_Angeles" +
-                "&location=" + loc + "&apikey=XPIAROop3O9FnGayZBJxA5xxmb7BS2ix";
-        JsonObjectRequest request = new JsonObjectRequest
-                (Request.Method.GET, url, null, response -> {
-                    try {
-                        MainTabsAdapter adapter = new MainTabsAdapter(getSupportFragmentManager(), response, favorList);
-                        mainTabs.setAdapter(adapter);
+                        JSONArray array = response.getJSONArray("predictions");
+                        for (int i = 0; i < array.length(); ++i) {
+                            JSONObject city = array.getJSONObject(i);
+                            cityList.add(city.getString("description"));
+                            autoCompleteAdapter = new AutoCompleteAdapter(this, android.R.layout.simple_dropdown_item_1line);
+                            autoCompleteAdapter.setData(cityList);
+                            s.setAdapter(autoCompleteAdapter);
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

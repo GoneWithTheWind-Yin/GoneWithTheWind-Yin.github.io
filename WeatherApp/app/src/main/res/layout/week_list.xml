@@ -7,6 +7,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:background="#272727"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,14 +29,14 @@
             android:verticalScrollbarPosition="defaultPosition" />
 
         <ImageView
-            android:id="@+id/forecastIcon"
+            android:id="@+id/forecast_icon"
             android:layout_width="6dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_clear_day" />
 
         <TextView
-            android:id="@+id/lowTemp"
+            android:id="@+id/low_temperature"
             android:layout_width="13dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -47,7 +48,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/highTemp"
+            android:id="@+id/high_temperature"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"

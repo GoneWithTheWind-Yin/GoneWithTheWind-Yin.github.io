@@ -15,7 +15,6 @@ import com.example.weatherapp.api.GetImage;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 
 public class WeekWeatherAdapter extends BaseAdapter {
@@ -54,11 +53,11 @@ public class WeekWeatherAdapter extends BaseAdapter {
             TextView date = view.findViewById(R.id.date);
             date.setText(weeklyData.get(position).getString("startTime").substring(0, 10));
 
-            ImageView forecastIcon = view.findViewById(R.id.forecastIcon);
+            ImageView forecastIcon = view.findViewById(R.id.forecast_icon);
             forecastIcon.setImageResource(getImage.getIncon(value.getInt("weatherCode")));
-            TextView lowTemp = view.findViewById(R.id.lowTemp);
+            TextView lowTemp = view.findViewById(R.id.low_temperature);
             lowTemp.setText("" + value.getInt("temperatureMin"));
-            TextView highTemp = view.findViewById(R.id.highTemp);
+            TextView highTemp = view.findViewById(R.id.high_temperature);
             highTemp.setText("" + value.getInt("temperatureMax"));
             return view;
         } catch (JSONException e) {
