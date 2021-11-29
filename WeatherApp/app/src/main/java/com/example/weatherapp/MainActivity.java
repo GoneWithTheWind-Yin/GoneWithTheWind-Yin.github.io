@@ -3,6 +3,7 @@ package com.example.weatherapp;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,7 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -37,6 +39,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 // TODO 设计有多个Tab的加载策略
 public class MainActivity extends AppCompatActivity {
@@ -45,18 +48,20 @@ public class MainActivity extends AppCompatActivity {
     private AutoCompleteAdapter autoCompleteAdapter;
     private FragmentManager mainFragmentManager;
     private GetWeatherData getWeatherData;
+    private static TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
-        getWeatherData.getWeatherDataByIP(mainFragmentManager);
+        getWeatherData.getAllWeatherData();
     }
 
     @Override
     protected void onRestart() {
-        // TODO 添加一个刷新列表的操作
+        // TODO 添加一个刷新列表的操作 restart和start有区别 restart的时候只添加不重新查询
+        getWeatherData.setMainPage();
         super.onRestart();
     }
 
@@ -64,11 +69,13 @@ public class MainActivity extends AppCompatActivity {
         mainFragmentManager = getSupportFragmentManager();
 
         requestQueue = Volley.newRequestQueue(this);
+
         mainTabs = findViewById(R.id.pager);
 
-        getWeatherData = new GetWeatherData(mainTabs, requestQueue, mainFragmentManager);
+        SharedPreferences sharedPreferences = getSharedPreferences("cities", Context.MODE_PRIVATE);
+        getWeatherData = new GetWeatherData(mainTabs, requestQueue, mainFragmentManager, sharedPreferences);
 
-        TabLayout tabLayout = findViewById(R.id.tab_layout);
+        tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(mainTabs);
     }
 
@@ -136,5 +143,11 @@ public class MainActivity extends AppCompatActivity {
                     error.printStackTrace();
                 });
         requestQueue.add(request);
+    }
+
+    public static void deleteCity(int pos) {
+        Log.d("Debug", "current tab size: " + tabLayout.getTabCount());
+        Log.d("Debug", "delete tab's info" + Objects.requireNonNull(tabLayout.getTabAt(pos)).getId());
+        tabLayout.removeTabAt(pos);
     }
 }

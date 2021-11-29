@@ -2,9 +2,12 @@ package com.example.weatherapp.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,21 +15,28 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.weatherapp.R;
+import com.example.weatherapp.adapters.MainTabsAdapter;
 import com.example.weatherapp.adapters.WeekWeatherAdapter;
 import com.example.weatherapp.api.GetImage;
 import com.example.weatherapp.data.WeatherData;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.LinkedList;
+import java.util.Map;
 
 public class Favorites extends Fragment {
     private GetImage getImage;
+    private TabLayout tabLayout;
     private Context context;
+    private ViewGroup rootView;
 
     public Favorites() {
         getImage = new GetImage();
@@ -41,7 +51,7 @@ public class Favorites extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final ViewGroup rootView = (ViewGroup) inflater.inflate(
+        rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_favorites, container, false);
         context = getActivity();
 
@@ -49,8 +59,10 @@ public class Favorites extends Fragment {
         assert args != null;
         String data = args.getString("WeatherBundle");
         String city = args.getString("CityBundle");
+        int color = args.getInt("Color");
         try {
-            // TODO 要加入一个对于城市的处理
+            rootView.setBackgroundResource(color);
+
             TextView location = rootView.findViewById(R.id.location);
             location.setText(city);
 
@@ -83,10 +95,75 @@ public class Favorites extends Fragment {
             WeekWeatherAdapter weekWeatherAdapter = new WeekWeatherAdapter(list, context);
             ListView weekList = rootView.findViewById(R.id.week_list);
             weekList.setAdapter(weekWeatherAdapter);
+
+            final FloatingActionButton floatingActionButton = rootView.findViewById(R.id.add_favorite);
+            SharedPreferences sharedPreferences = getActivity().getSharedPreferences("cities", Context.MODE_PRIVATE);
+            Map<String, ?> map = sharedPreferences.getAll();
+            if (map.containsKey(city)) {
+                floatingActionButton.setImageResource(R.mipmap.map_marker_minus);
+            }
+            boolean isFrontPage = args.getBoolean("IsFrontPage");
+            if (isFrontPage) {
+                floatingActionButton.setVisibility(View.GONE);
+            }
+
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences("cities", Context.MODE_PRIVATE);
+                    Map<String, ?> map = sharedPreferences.getAll();
+                    if (map.containsKey(city)) {
+                        deleteFromFavorite();
+                    } else {
+                        addToFavorite();
+                    }
+                }
+            });
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         return rootView;
+    }
+
+    public void addToFavorite() {
+        Bundle args = getArguments();
+        assert args != null;
+        String data = args.getString("WeatherBundle");
+        String city = args.getString("CityBundle");
+
+        final FloatingActionButton floatingActionButton = rootView.findViewById(R.id.add_favorite);
+        floatingActionButton.setImageResource(R.mipmap.map_marker_minus);
+        Toast.makeText(getActivity(), city +" was added to favorites", Toast.LENGTH_SHORT).show();
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("cities", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(city, data);
+        editor.apply();
+        // TODO 要做删除后的view处理
+    }
+
+    public void deleteFromFavorite() {
+        Bundle args = getArguments();
+        assert args != null;
+        String city = args.getString("CityBundle");
+
+        final FloatingActionButton floatingActionButton = rootView.findViewById(R.id.add_favorite);
+        floatingActionButton.setImageResource(R.mipmap.map_marker_plus);
+        Toast.makeText(getActivity(), city +" was removed to favorites", Toast.LENGTH_SHORT).show();
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("cities", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(city);
+        editor.apply();
+
+        // TODO 要判断是不是mainPage，只有mainPage才刷新
+        ViewPager viewPager = getActivity().findViewById(R.id.pager);
+        MainTabsAdapter mainTabsAdapter = (MainTabsAdapter) viewPager.getAdapter();
+        assert mainTabsAdapter != null;
+        mainTabsAdapter.deleteCity(rootView, city);
+        mainTabsAdapter.notifyDataSetChanged();
     }
 }

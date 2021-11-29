@@ -13,6 +13,7 @@
         android:theme="@style/AppTheme.Launcher">
         <activity
             android:name=".SearchableActivity"
+            android:parentActivityName=".MainActivity"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -25,7 +26,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

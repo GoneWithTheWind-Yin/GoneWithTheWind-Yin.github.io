@@ -30,7 +30,7 @@
         <entry key="app/src/main/res/drawable-v24/tab_selector.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.4197916666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/activity_searchable.xml" value="0.3311965811965812" />
+        <entry key="app/src/main/res/layout/activity_searchable.xml" value="0.25" />
         <entry key="app/src/main/res/layout/autocomplete.xml" value="0.3311965811965812" />
         <entry key="app/src/main/res/layout/fragment_favorites.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_fetching_data.xml" value="0.2704232971076812" />

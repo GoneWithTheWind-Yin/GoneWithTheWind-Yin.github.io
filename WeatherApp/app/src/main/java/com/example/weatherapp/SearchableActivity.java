@@ -6,8 +6,11 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -35,7 +38,9 @@ public class SearchableActivity extends AppCompatActivity {
         init();
         Intent intent = getIntent();
         String city = intent.getStringExtra("CityBundle");
-        getWeatherDataBySearch = new GetWeatherDataBySearch(findViewById(R.layout.activity_searchable), requestQueue, getSupportFragmentManager(), getSupportActionBar());
+        SharedPreferences sharedPreferences = getSharedPreferences("cities", Context.MODE_PRIVATE);
+        getWeatherDataBySearch = new GetWeatherDataBySearch(null, requestQueue,
+                getSupportFragmentManager(), sharedPreferences, getSupportActionBar(), this);
         getWeatherDataBySearch.getWeatherDataByCity(city);
     }
 
@@ -45,7 +50,8 @@ public class SearchableActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
+        // 解决如何返回的时候不显示progress bar
+        finish();
+        return super.onSupportNavigateUp();
     }
 }

@@ -1,32 +1,40 @@
 package com.example.weatherapp.adapters;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import com.example.weatherapp.MainActivity;
+import com.example.weatherapp.R;
 import com.example.weatherapp.data.WeatherData;
 import com.example.weatherapp.fragment.Favorites;
+import com.google.android.material.tabs.TabLayout;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Map;
 
-public class MainTabsAdapter extends FragmentPagerAdapter {
+public class MainTabsAdapter extends FragmentStatePagerAdapter {
     // TODO 后续改为一个list方便进行add和remove的操作
     private ArrayList<WeatherData> favoriteCities;
     private WeatherData currentLocData;
-    static int NUM_PAGES = 1;
+//    private ArrayList<Favorites> fragmentList;
 
     public MainTabsAdapter(FragmentManager manager, WeatherData currentLocData, ArrayList<WeatherData> favoriteCities) {
         // TODO 支持传入参数
         super(manager);
         this.currentLocData = currentLocData;
         this.favoriteCities = favoriteCities;
-        NUM_PAGES = favoriteCities.size() + 1;
     }
 
     @NonNull
@@ -42,23 +50,43 @@ public class MainTabsAdapter extends FragmentPagerAdapter {
             Bundle args = new Bundle();
             args.putString("WeatherBundle", currentLocData.getData().toString());
             args.putString("CityBundle", currentLocData.getCity());
+            args.putInt("Color", R.color.gray);
+            args.putBoolean("IsFrontPage", true);
             favorite.setArguments(args);
             return favorite;
         } else {
             // 处理list里面的数据
+            Log.d("Debug", "current tab position: " + position + ", current tab name: " + favoriteCities.get(position - 1).getCity());
             Favorites favorite = new Favorites();
             Bundle args = new Bundle();
             args.putString("WeatherBundle", favoriteCities.get(position - 1).getData().toString());
             args.putString("CityBundle", favoriteCities.get(position - 1).getCity());
+            args.putInt("Color", R.color.gray);
+            args.putBoolean("IsFrontPage", false);
             favorite.setArguments(args);
             return favorite;
         }
     }
 
-
-
     @Override
     public int getCount() {
-        return NUM_PAGES;
+        return favoriteCities.size() + 1;
+    }
+
+    public void deleteCity(ViewGroup context, String city) {
+        int pos = 0;
+        for (int i = 0; i < favoriteCities.size(); ++i) {
+            if (favoriteCities.get(i).getCity().equals(city)) {
+                pos = i;
+                break;
+            }
+        }
+        // TODO 需要优化 在删除某一页后不可以继续滑动
+        destroyItem(context, pos + 1, getItem(pos + 1));
+        MainActivity.deleteCity(pos + 1);
+        favoriteCities.remove(pos);
+        for (int i = 0; i < favoriteCities.size(); ++i) {
+            Log.d("Debug", "current city name: " + favoriteCities.get(i).getCity());
+        }
     }
 }

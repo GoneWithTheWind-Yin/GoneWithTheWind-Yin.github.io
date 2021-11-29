@@ -1,39 +1,54 @@
 package com.example.weatherapp.api;
 
-import android.os.Bundle;
-import android.widget.TextView;
+import android.content.SharedPreferences;
+import android.util.Log;
 
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.weatherapp.R;
 import com.example.weatherapp.adapters.MainTabsAdapter;
 import com.example.weatherapp.data.WeatherData;
-import com.example.weatherapp.fragment.Favorites;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class GetWeatherData {
     protected final ViewPager viewPager;
     protected final RequestQueue requestQueue;
     protected final FragmentManager fragmentManager;
+    SharedPreferences sharedPreferences;
     protected ArrayList<WeatherData> favoriteList = new ArrayList<>();
     protected final GetUrl getUrl;
+    protected int listSize = 1;
+    protected WeatherData currentLocData;
+    protected AtomicInteger num = new AtomicInteger();
 
-    public GetWeatherData(ViewPager viewPager, RequestQueue requestQueue, FragmentManager fragmentManager) {
+    public GetWeatherData(ViewPager viewPager, RequestQueue requestQueue, FragmentManager fragmentManager, SharedPreferences sharedPreferences) {
         this.viewPager = viewPager;
         this.requestQueue = requestQueue;
         this.fragmentManager = fragmentManager;
+        this.sharedPreferences = sharedPreferences;
         this.getUrl = new GetUrl();
+    }
 
+    public void getAllWeatherData() {
+        Map<String, ?> map = sharedPreferences.getAll();
+        listSize = map.size() + 1;
+        num = new AtomicInteger();
+        Log.d("Debug", "current list size: " + listSize);
+        getWeatherDataByIP(fragmentManager);
+        for (String key: map.keySet()) {
+            Log.d("Debug", "current city name: " + key);
+            getWeatherDataByCity(key);
+        }
     }
 
     public void getWeatherDataByIP(FragmentManager fragmentManager) {
@@ -42,8 +57,8 @@ public class GetWeatherData {
         JsonObjectRequest request = new JsonObjectRequest
                 (Request.Method.GET, url, null, response -> {
                     try {
-                        String city = response.getString("city") + response.getString("region");
-                        requestWeatherData(response.getString("loc"), city);
+                        String city = response.getString("city") + ", " + response.getString("region");
+                        requestWeatherData(response.getString("loc"), city, true);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -61,7 +76,7 @@ public class GetWeatherData {
                         JSONArray results = response.getJSONArray("results");
                         JSONObject geometry = results.getJSONObject(0).getJSONObject("geometry");
                         JSONObject location = geometry.getJSONObject("location");
-                        requestWeatherData(location.getString("lat") + "," + location.getString("lng"), city);
+                        requestWeatherData(location.getString("lat") + "," + location.getString("lng"), city, false);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -71,15 +86,23 @@ public class GetWeatherData {
         requestQueue.add(request);
     }
 
-    public void requestWeatherData(String loc, String city) {
+    public void requestWeatherData(String loc, String city, boolean isFrontPage) {
         String url = getUrl.getWeatherUrl() + "&location=" + loc;
         JsonObjectRequest request = new JsonObjectRequest
                 (Request.Method.GET, url, null, response -> {
                     try {
-                        // TODO 要处理favoriteList
-                        WeatherData currentLocData = new WeatherData(city, response);
-                        MainTabsAdapter adapter = new MainTabsAdapter(fragmentManager, currentLocData, favoriteList);
-                        viewPager.setAdapter(adapter);
+                        if (isFrontPage) {
+                            currentLocData = new WeatherData(city, response);
+                            num.addAndGet(1);
+                        } else {
+                            // TODO 后续可能要对于list的顺序做一个处理
+                            favoriteList.add(new WeatherData(city, response));
+                            num.addAndGet(1);
+                        }
+                        Log.d("Debug", "current finished request number: " + num.get());
+                        if (num.get() == listSize) {
+                            setMainPage();
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -87,5 +110,20 @@ public class GetWeatherData {
                     error.printStackTrace();
                 });
         requestQueue.add(request);
+    }
+
+    public void setMainPage() {
+        favoriteList = new ArrayList<>();
+        Map<String, ?> map = sharedPreferences.getAll();
+        for (String key: map.keySet()) {
+            String data = sharedPreferences.getString(key, "");
+            try {
+                favoriteList.add(new WeatherData(key, new JSONObject(data)));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        MainTabsAdapter adapter = new MainTabsAdapter(fragmentManager, currentLocData, favoriteList);
+        viewPager.setAdapter(adapter);
     }
 }
