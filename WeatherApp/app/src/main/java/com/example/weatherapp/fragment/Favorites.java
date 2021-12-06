@@ -2,13 +2,16 @@ package com.example.weatherapp.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +20,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.weatherapp.DetailActivity;
+import com.example.weatherapp.MainActivity;
 import com.example.weatherapp.R;
 import com.example.weatherapp.adapters.MainTabsAdapter;
 import com.example.weatherapp.adapters.WeekWeatherAdapter;
@@ -120,6 +125,17 @@ public class Favorites extends Fragment {
                 }
             });
 
+            CardView overallInfo = rootView.findViewById(R.id.overall_info);
+            overallInfo.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, DetailActivity.class);
+                    intent.putExtra("CityBundle", city);
+                    intent.putExtra("WeatherBundle", data);
+                    startActivity(intent);
+                }
+            });
+
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -163,7 +179,10 @@ public class Favorites extends Fragment {
         ViewPager viewPager = getActivity().findViewById(R.id.pager);
         MainTabsAdapter mainTabsAdapter = (MainTabsAdapter) viewPager.getAdapter();
         assert mainTabsAdapter != null;
-        mainTabsAdapter.deleteCity(rootView, city);
+        int pos = mainTabsAdapter.getCity(city);
+        Log.d("Debug", "delete page is " + pos);
+        MainActivity.deleteCity(pos + 1);
+        mainTabsAdapter.deleteCity(pos);
         mainTabsAdapter.notifyDataSetChanged();
     }
 }

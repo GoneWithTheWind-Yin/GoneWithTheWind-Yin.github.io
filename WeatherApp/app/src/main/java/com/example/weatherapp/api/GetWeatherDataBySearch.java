@@ -26,7 +26,7 @@ public class GetWeatherDataBySearch extends GetWeatherData {
     public GetWeatherDataBySearch(ViewPager viewPager, RequestQueue requestQueue, FragmentManager fragmentManager,
                                   SharedPreferences sharedPreferences,
                                   ActionBar actionBar, AppCompatActivity appCompatActivity) {
-        super(viewPager, requestQueue, fragmentManager, sharedPreferences);
+        super(viewPager, requestQueue, fragmentManager, sharedPreferences, null);
         this.actionBar = actionBar;
         this.appCompatActivity = appCompatActivity;
     }

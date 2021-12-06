@@ -6,7 +6,7 @@ public class GetUrl {
     private final String weatherUrl = "https://api.tomorrow.io/v4/timelines?fields=temperature,temperatureApparent," +
             "temperatureMin,temperatureMax,windSpeed,windDirection,humidity,pressureSeaLevel,uvIndex,weatherCode," +
             "precipitationProbability,precipitationType,sunriseTime,sunsetTime,visibility,moonPhase," +
-            "cloudCover&timesteps=1d&units=imperial&timezone=America/Los_Angeles&apikey=mMSmnGIVw3Fr1WsrBUpy8k7wcIMqzbNg";
+            "cloudCover&timesteps=1d&units=imperial&timezone=America/Los_Angeles&apikey=XPIAROop3O9FnGayZBJxA5xxmb7BS2ix";
 
     public String getIpUrl() {
         return ipUrl;

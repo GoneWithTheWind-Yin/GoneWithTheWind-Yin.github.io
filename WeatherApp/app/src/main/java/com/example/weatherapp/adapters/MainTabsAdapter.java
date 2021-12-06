@@ -73,20 +73,18 @@ public class MainTabsAdapter extends FragmentStatePagerAdapter {
         return favoriteCities.size() + 1;
     }
 
-    public void deleteCity(ViewGroup context, String city) {
-        int pos = 0;
+    public void deleteCity(int pos) {
+        if (!favoriteCities.isEmpty() && favoriteCities.size() >= pos) {
+            favoriteCities.remove(pos);
+        }
+    }
+
+    public int getCity(String city) {
         for (int i = 0; i < favoriteCities.size(); ++i) {
             if (favoriteCities.get(i).getCity().equals(city)) {
-                pos = i;
-                break;
+                return i;
             }
         }
-        // TODO 需要优化 在删除某一页后不可以继续滑动
-        destroyItem(context, pos + 1, getItem(pos + 1));
-        MainActivity.deleteCity(pos + 1);
-        favoriteCities.remove(pos);
-        for (int i = 0; i < favoriteCities.size(); ++i) {
-            Log.d("Debug", "current city name: " + favoriteCities.get(i).getCity());
-        }
+        return 0;
     }
 }

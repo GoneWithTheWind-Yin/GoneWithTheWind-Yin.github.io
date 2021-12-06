@@ -73,10 +73,8 @@ public class MainActivity extends AppCompatActivity {
         mainTabs = findViewById(R.id.pager);
 
         SharedPreferences sharedPreferences = getSharedPreferences("cities", Context.MODE_PRIVATE);
-        getWeatherData = new GetWeatherData(mainTabs, requestQueue, mainFragmentManager, sharedPreferences);
-
         tabLayout = findViewById(R.id.tab_layout);
-        tabLayout.setupWithViewPager(mainTabs);
+        getWeatherData = new GetWeatherData(mainTabs, requestQueue, mainFragmentManager, sharedPreferences, tabLayout);
     }
 
     @Override
@@ -146,8 +144,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void deleteCity(int pos) {
-        Log.d("Debug", "current tab size: " + tabLayout.getTabCount());
-        Log.d("Debug", "delete tab's info" + Objects.requireNonNull(tabLayout.getTabAt(pos)).getId());
+        int num = tabLayout.getTabCount();
+        Log.d("Debug", "current tab size: " + num);
+        for (int i = 0; i < num; ++i) {
+            Log.d("Debug", "delete tab's info " + tabLayout.getTabAt(i).toString());
+        }
         tabLayout.removeTabAt(pos);
     }
 }

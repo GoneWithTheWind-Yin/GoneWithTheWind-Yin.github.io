@@ -11,6 +11,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.weatherapp.adapters.MainTabsAdapter;
 import com.example.weatherapp.data.WeatherData;
+import com.google.android.material.tabs.TabLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,12 +31,14 @@ public class GetWeatherData {
     protected int listSize = 1;
     protected WeatherData currentLocData;
     protected AtomicInteger num = new AtomicInteger();
+    protected TabLayout tabLayout;
 
-    public GetWeatherData(ViewPager viewPager, RequestQueue requestQueue, FragmentManager fragmentManager, SharedPreferences sharedPreferences) {
+    public GetWeatherData(ViewPager viewPager, RequestQueue requestQueue, FragmentManager fragmentManager, SharedPreferences sharedPreferences, TabLayout tabLayout) {
         this.viewPager = viewPager;
         this.requestQueue = requestQueue;
         this.fragmentManager = fragmentManager;
         this.sharedPreferences = sharedPreferences;
+        this.tabLayout = tabLayout;
         this.getUrl = new GetUrl();
     }
 
@@ -125,5 +128,6 @@ public class GetWeatherData {
         }
         MainTabsAdapter adapter = new MainTabsAdapter(fragmentManager, currentLocData, favoriteList);
         viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
     }
 }
