@@ -78,8 +78,9 @@ public class GetWeatherData {
                     try {
                         JSONArray results = response.getJSONArray("results");
                         JSONObject geometry = results.getJSONObject(0).getJSONObject("geometry");
+                        String formattedAddress = results.getJSONObject(0).getString("formatted_address");
                         JSONObject location = geometry.getJSONObject("location");
-                        requestWeatherData(location.getString("lat") + "," + location.getString("lng"), city, false);
+                        requestWeatherData(location.getString("lat") + "," + location.getString("lng"), formattedAddress, false);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
