@@ -30,6 +30,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.weatherapp.adapters.AutoCompleteAdapter;
 import com.example.weatherapp.adapters.MainTabsAdapter;
+import com.example.weatherapp.api.GetUrl;
 import com.example.weatherapp.api.GetWeatherData;
 import com.google.android.material.tabs.TabLayout;
 
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager mainFragmentManager;
     private GetWeatherData getWeatherData;
     private static TabLayout tabLayout;
+    private GetUrl getUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
+        getUrl = new GetUrl();
         mainFragmentManager = getSupportFragmentManager();
 
         requestQueue = Volley.newRequestQueue(this);
@@ -121,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getAutoComplete(String input, SearchView.SearchAutoComplete s) {
-        String url = "https://weathersearch-1998.wl.r.appspot.com/autocomplete?city=" + input;
+        String url = getUrl.getAutoCompleteUrl() + input;
         JsonObjectRequest request = new JsonObjectRequest
                 (Request.Method.GET, url, null, response -> {
                     List<String> cityList = new ArrayList<>();

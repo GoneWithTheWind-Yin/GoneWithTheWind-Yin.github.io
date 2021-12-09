@@ -2,8 +2,9 @@ package com.example.weatherapp.api;
 
 public class GetUrl {
     private final String ipUrl = "https://ipinfo.io/?token=0b676f0b07b1a9";
-    private final String geoUrl = "https://maps.googleapis.com/maps/api/geocode/json?&key=AIzaSyAd9Qbqgx8fyM2WufIIkdlRcBt8mDrtdoM&language=en_US";
+    private final String geoUrl = "https://weathersearch-1998.wl.r.appspot.com/get_location?city=";
     private final String weatherUrl = "https://weathersearch-1998.wl.r.appspot.com/search?timesteps=1d";
+    private final String autoCompleteUrl = "https://weathersearch-1998.wl.r.appspot.com/autocomplete?city=";
 
 //    mMSmnGIVw3Fr1WsrBUpy8k7wcIMqzbNg
 //    XPIAROop3O9FnGayZBJxA5xxmb7BS2ix
@@ -18,5 +19,9 @@ public class GetUrl {
 
     public String getWeatherUrl() {
         return weatherUrl;
+    }
+
+    public String getAutoCompleteUrl() {
+        return autoCompleteUrl;
     }
 }

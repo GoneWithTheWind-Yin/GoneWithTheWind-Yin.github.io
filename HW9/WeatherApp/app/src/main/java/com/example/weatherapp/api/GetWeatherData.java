@@ -73,7 +73,7 @@ public class GetWeatherData {
     }
 
     public void getWeatherDataByCity(String city) {
-        String url = getUrl.getGeoUrl() + "&address=" + city;
+        String url = getUrl.getGeoUrl() + city;
         JsonObjectRequest request = new JsonObjectRequest
                 (Request.Method.GET, url, null, response -> {
                     try {

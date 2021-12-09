@@ -71,6 +71,23 @@ app.get('/autocomplete', function (req, res) {
     });
 })
 
+app.get('/get_location', function (req, res) {
+    var params = url.parse(req.url, true).query;
+    var completeURL = 'https://maps.googleapis.com/maps/api/geocode/json?&key=AIzaSyAd9Qbqgx8fyM2WufIIkdlRcBt8mDrtdoM&language=en_US&address=' + params.city;
+    res.setHeader("Content-Type", "application/json; charset=utf-8");
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    https.get(completeURL, function (request) {
+        var text = "";
+        request.on('data', function (data) {
+            text += data;
+        });
+        request.on('end', function () {
+            return res.send(text);
+        });
+
+    });
+})
+
 
 app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`);
